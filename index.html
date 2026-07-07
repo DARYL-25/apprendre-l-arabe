@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iqra' — Apprendre à lire l'arabe et le Coran</title>
+<meta name="description" content="Apprends l'alphabet arabe, la lecture et le vocabulaire du Coran en t'amusant — niveaux progressifs, théorie complète, Coran avec récitateurs célèbres.">
+<meta name="theme-color" content="#0b5e46">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Iqra'">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ Onboarding ============ -->
+<div id="onboarding">
+  <div class="ob-step active">
+    <div class="ob-logo ar">اقْرَأْ</div>
+    <h1>Iqra'</h1>
+    <p>Apprends à <b>lire l'arabe</b> et à comprendre le <b>Coran</b>, pas à pas, en t'amusant.</p>
+    <div class="ob-features">
+      <span>🎮 Des niveaux comme un jeu</span>
+      <span>📖 Les 114 sourates + récitateurs</span>
+      <span>🧠 Toute la théorie, de zéro au tajwid</span>
+      <span>🗣️ Prononciation audio</span>
+    </div>
+    <button class="btn big" data-next>C'EST PARTI !</button>
+  </div>
+  <div class="ob-step">
+    <h1>🗣️ Choisis ta voix</h1>
+    <p>Pour la prononciation des lettres et des mots :</p>
+    <div class="ob-choices">
+      <button class="ob-card" data-voice="m"><span class="ob-emoji">👨</span><b>Voix masculine</b></button>
+      <button class="ob-card" data-voice="f"><span class="ob-emoji">👩</span><b>Voix féminine</b></button>
+    </div>
+    <p class="ob-note">La voix dépend de celles installées sur ton appareil.<br>Tu pourras changer à tout moment dans Profil.</p>
+  </div>
+  <div class="ob-step">
+    <h1>🌍 Langue de traduction</h1>
+    <p>Dans quelle langue veux-tu traduire les mots et les versets ?</p>
+    <div class="ob-choices langs">
+      <button class="ob-card" data-lang="fr"><span class="ob-emoji">🇫🇷</span><b>Français</b></button>
+      <button class="ob-card" data-lang="en"><span class="ob-emoji">🇬🇧</span><b>English</b></button>
+      <button class="ob-card" data-lang="tr"><span class="ob-emoji">🇹🇷</span><b>Türkçe</b></button>
+      <button class="ob-card" data-lang="id"><span class="ob-emoji">🇮🇩</span><b>Indonesia</b></button>
+      <button class="ob-card" data-lang="ur"><span class="ob-emoji">🇵🇰</span><b>اردو</b></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Accueil : le parcours ============ -->
+<section class="screen active" id="screen-home">
+  <header class="topbar">
+    <span class="logo">Iqra' <span class="ar logo-ar">اقرأ</span></span>
+    <span class="top-stats"><span id="home-streak">🔥 0</span><span id="home-xp">0 XP</span></span>
+  </header>
+  <div id="path"></div>
+</section>
+
+<!-- ============ Coran : liste ============ -->
+<section class="screen" id="screen-quran">
+  <header class="topbar"><span class="logo">📖 Le Coran</span></header>
+  <div class="search-wrap"><input id="surah-search" type="search" placeholder="Chercher une sourate (nom ou numéro)…"></div>
+  <div id="surah-list"></div>
+</section>
+
+<!-- ============ Coran : lecture d'une sourate ============ -->
+<section class="screen" id="screen-surah">
+  <header class="topbar">
+    <button class="btn-icon" id="btn-back-quran">←</button>
+    <button class="btn small" id="btn-play-all">▶ Tout écouter</button>
+  </header>
+  <h2 id="surah-title" class="surah-title"></h2>
+  <div id="ayah-list"></div>
+</section>
+
+<!-- ============ Théorie : liste des chapitres ============ -->
+<section class="screen" id="screen-theory">
+  <header class="topbar"><span class="logo">🧠 Théorie</span></header>
+  <p class="theory-intro">Tous les secrets de la lecture arabe, du niveau zéro jusqu'aux règles de tajwid. Avance chapitre par chapitre !</p>
+  <div id="theory-list"></div>
+</section>
+
+<!-- ============ Théorie : un chapitre ============ -->
+<section class="screen" id="screen-theory-chapter">
+  <header class="topbar">
+    <button class="btn-icon" id="btn-back-theory">←</button>
+    <span class="logo" id="theory-title"></span>
+  </header>
+  <article id="theory-body" class="theory-body"></article>
+  <div id="theory-nav" class="theory-nav"></div>
+</section>
+
+<!-- ============ Profil et réglages ============ -->
+<section class="screen" id="screen-profile">
+  <header class="topbar"><span class="logo">👤 Profil</span></header>
+  <div id="profile-stats" class="profile-stats"></div>
+  <div class="settings">
+    <h3>⚙️ Réglages</h3>
+    <label>Voix de prononciation
+      <select id="set-voice">
+        <option value="m">👨 Masculine</option>
+        <option value="f">👩 Féminine</option>
+      </select>
+    </label>
+    <label>Langue de traduction
+      <select id="set-lang">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="tr">🇹🇷 Türkçe</option>
+        <option value="id">🇮🇩 Indonesia</option>
+        <option value="ur">🇵🇰 اردو</option>
+      </select>
+    </label>
+    <label>Récitateur du Coran
+      <select id="set-reciter"></select>
+    </label>
+    <button class="btn small danger" id="btn-reset">🗑️ Réinitialiser ma progression</button>
+  </div>
+  <div class="about">
+    <p><b>Iqra' (اقرأ)</b> — « Lis ! », le premier mot du Coran révélé.</p>
+    <p>Texte coranique et traductions : api.alquran.cloud · Récitations : cdn.islamic.network.</p>
+    <p>Ajoute l'app à ton écran d'accueil : dans Safari, <b>Partager → Sur l'écran d'accueil</b>.</p>
+  </div>
+</section>
+
+<!-- ============ Leçon en cours ============ -->
+<section class="screen" id="screen-lesson">
+  <header class="lesson-header">
+    <button class="btn-icon" id="btn-quit-lesson">✕</button>
+    <div class="lesson-progress"><div id="lesson-progress-fill"></div></div>
+    <span id="lesson-hearts">❤️❤️❤️</span>
+  </header>
+  <div id="lesson-body"></div>
+  <footer id="lesson-footer">
+    <div id="lesson-feedback"></div>
+    <button class="btn big" id="btn-check" disabled>VÉRIFIER</button>
+  </footer>
+</section>
+
+<!-- ============ Navigation basse ============ -->
+<nav id="bottom-nav">
+  <button class="nav-btn active" id="nav-learn"><span>🏠</span>Apprendre</button>
+  <button class="nav-btn" id="nav-quran"><span>📖</span>Coran</button>
+  <button class="nav-btn" id="nav-theory"><span>🧠</span>Théorie</button>
+  <button class="nav-btn" id="nav-profile"><span>👤</span>Profil</button>
+</nav>
+
+<script src="js/data/letters.js"></script>
+<script src="js/data/vocab.js"></script>
+<script src="js/data/surahs.js"></script>
+<script src="js/data/theory.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/quran.js"></script>
+<script src="js/exercises.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

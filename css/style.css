@@ -1,0 +1,225 @@
+/* ============================================================
+   Iqra' — Design inspiré Duolingo : joyeux, rond, contrasté
+   ============================================================ */
+:root {
+  --green: #58cc02;       --green-dark: #46a302;
+  --blue: #1cb0f6;        --blue-dark: #1899d6;
+  --red: #ff4b4b;         --orange: #ff9600;
+  --purple: #ce82ff;      --gold: #ffc800;
+  --ink: #3c3c3c;         --ink-light: #777;
+  --line: #e5e5e5;        --bg: #ffffff;
+  --panel: #f7f7f7;
+  --radius: 16px;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+  font-family: "Nunito", -apple-system, "Segoe UI", sans-serif; font-size: 17px; }
+button { font-family: inherit; cursor: pointer; }
+
+.ar { font-family: "Scheherazade New", "Amiri", "Traditional Arabic", serif;
+  direction: rtl; unicode-bidi: isolate; }
+.ar.big { font-size: 1.8em; }
+
+/* ---------- écrans ---------- */
+.screen { display: none; max-width: 640px; margin: 0 auto; padding: 0 14px 90px; min-height: 100vh; }
+.screen.active { display: block; }
+
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 14px 2px 10px; position: sticky; top: 0; background: var(--bg); z-index: 20;
+  padding-top: calc(14px + env(safe-area-inset-top)); }
+.logo { font-weight: 900; font-size: 22px; color: var(--green-dark); }
+.logo-ar { color: var(--green); font-size: 26px; }
+.top-stats { display: flex; gap: 14px; font-weight: 800; color: var(--orange); }
+#home-xp { color: var(--gold); }
+
+/* ---------- boutons ---------- */
+.btn { border: none; border-radius: var(--radius); background: var(--green); color: #fff;
+  font-weight: 900; letter-spacing: .5px; padding: 14px 22px; font-size: 17px;
+  box-shadow: 0 4px 0 var(--green-dark); transition: filter .15s, transform .05s; }
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--green-dark); }
+.btn:disabled { background: var(--line); box-shadow: 0 4px 0 #d0d0d0; color: #aaa; }
+.btn.big { width: 100%; padding: 16px; font-size: 18px; }
+.btn.small { padding: 9px 16px; font-size: 15px; }
+.btn.alt { background: var(--blue); box-shadow: 0 4px 0 var(--blue-dark); margin-top: 10px; }
+.btn.danger { background: var(--red); box-shadow: 0 4px 0 #d63a3a; margin-top: 16px; }
+.btn-icon { border: 2px solid var(--line); background: #fff; border-radius: 12px;
+  font-size: 20px; padding: 6px 12px; color: var(--ink-light); }
+
+/* ---------- onboarding ---------- */
+#onboarding { position: fixed; inset: 0; background: linear-gradient(160deg, #0b5e46, #0e7c5a 55%, #16a077);
+  z-index: 100; color: #fff; display: flex; align-items: center; justify-content: center;
+  padding: 24px; text-align: center; }
+.ob-step { display: none; max-width: 420px; width: 100%; }
+.ob-step.active { display: block; animation: pop .35s ease; }
+@keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+.ob-logo { font-size: 84px; font-weight: 700; text-shadow: 0 6px 24px rgba(0,0,0,.3); }
+.ob-step h1 { font-size: 34px; margin: 8px 0; font-weight: 900; }
+.ob-step p { font-size: 18px; opacity: .95; }
+.ob-features { display: flex; flex-direction: column; gap: 10px; margin: 22px 0;
+  font-weight: 700; font-size: 16px; }
+.ob-features span { background: rgba(255,255,255,.13); border-radius: 12px; padding: 10px; }
+.ob-choices { display: flex; gap: 14px; justify-content: center; margin: 24px 0; flex-wrap: wrap; }
+.ob-choices.langs { flex-direction: column; }
+.ob-card { background: #fff; color: var(--ink); border: none; border-radius: 18px;
+  padding: 18px 22px; font-size: 18px; font-weight: 800; display: flex; align-items: center;
+  gap: 12px; justify-content: center; box-shadow: 0 5px 0 rgba(0,0,0,.25); flex: 1; min-width: 150px; }
+.ob-card:active, .ob-card.sel { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.25); }
+.ob-emoji { font-size: 30px; }
+.ob-note { font-size: 14px !important; opacity: .8; }
+
+/* ---------- parcours (accueil) ---------- */
+#path { padding-top: 8px; }
+.unit { margin-bottom: 26px; }
+.unit-head { color: #fff; border-radius: var(--radius); padding: 14px 18px; font-size: 17px;
+  display: flex; gap: 12px; align-items: center; box-shadow: 0 4px 0 rgba(0,0,0,.18); }
+.unit-icon { font-size: 26px; }
+.unit-lessons { display: flex; flex-direction: column; gap: 10px; padding: 16px 6px 0; }
+.lesson-node { display: flex; align-items: center; gap: 14px; border: 2px solid var(--line);
+  background: #fff; border-radius: var(--radius); padding: 10px 14px; text-align: left;
+  font-size: 16px; font-weight: 700; color: var(--ink); transition: border-color .15s; }
+.lesson-node:not(.locked):hover { border-color: var(--c); }
+.node-circle { width: 46px; height: 46px; min-width: 46px; border-radius: 50%;
+  background: var(--c); color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 19px; box-shadow: 0 4px 0 rgba(0,0,0,.2); }
+.lesson-node.locked { opacity: .45; }
+.lesson-node.locked .node-circle { background: #c7c7c7; }
+.node-label small { display: block; color: var(--gold); font-size: 13px; letter-spacing: 2px; }
+
+/* ---------- navigation basse ---------- */
+#bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
+  border-top: 2px solid var(--line); display: flex; z-index: 30;
+  padding-bottom: env(safe-area-inset-bottom); }
+.nav-btn { flex: 1; background: none; border: none; padding: 8px 0 6px; font-size: 11px;
+  font-weight: 800; color: var(--ink-light); display: flex; flex-direction: column;
+  align-items: center; gap: 2px; }
+.nav-btn span { font-size: 24px; }
+.nav-btn.active { color: var(--green-dark); }
+
+/* ---------- leçon ---------- */
+#screen-lesson { display: none; padding-bottom: 150px; }
+#screen-lesson.active { display: block; }
+.lesson-header { display: flex; align-items: center; gap: 12px; padding: 14px 2px;
+  padding-top: calc(14px + env(safe-area-inset-top)); position: sticky; top: 0;
+  background: var(--bg); z-index: 20; }
+.lesson-progress { flex: 1; height: 14px; background: var(--line); border-radius: 8px; overflow: hidden; }
+#lesson-progress-fill { height: 100%; width: 0; background: var(--green); border-radius: 8px;
+  transition: width .3s ease; }
+#lesson-hearts { font-size: 14px; letter-spacing: 1px; }
+.ex-title { font-size: 21px; font-weight: 900; margin: 18px 0 6px; }
+.ex-title small { color: var(--ink-light); font-weight: 700; }
+.ex-prompt { font-size: 64px; text-align: center; margin: 18px 0 8px; line-height: 1.5; cursor: pointer; }
+.ex-prompt .spk { font-size: 22px; vertical-align: middle; }
+.ex-sub { text-align: center; color: var(--ink-light); font-weight: 700; margin-bottom: 8px; }
+.ex-bigplay { display: block; margin: 26px auto; font-size: 42px; background: var(--blue);
+  border: none; border-radius: 22px; padding: 18px 34px; box-shadow: 0 5px 0 var(--blue-dark); }
+.ex-bigplay:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--blue-dark); }
+.ex-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.ex-opt { border: 2px solid var(--line); border-bottom-width: 4px; background: #fff;
+  border-radius: var(--radius); padding: 16px 10px; font-size: 18px; font-weight: 800;
+  color: var(--ink); transition: all .12s; }
+.ex-opt.ar { font-size: 30px; }
+.ex-opt.sel { border-color: var(--blue); background: #e7f6ff; color: var(--blue-dark); }
+.ex-opt.good { border-color: var(--green); background: #e8ffd6; color: var(--green-dark); }
+.ex-opt.bad { border-color: var(--red); background: #ffe3e3; color: var(--red); }
+.ex-opt.locked { pointer-events: none; }
+
+/* construis le mot */
+.build-slot { min-height: 74px; border-bottom: 3px dashed var(--line); font-size: 44px;
+  text-align: center; margin: 18px 0; }
+.build-tiles { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.build-tile { font-size: 32px; border: 2px solid var(--line); border-bottom-width: 4px;
+  background: #fff; border-radius: 14px; padding: 8px 18px; }
+.build-tile.used { opacity: .25; }
+.build-undo { display: block; margin: 16px auto 0; background: none; border: none;
+  color: var(--blue-dark); font-weight: 800; font-size: 15px; }
+
+#lesson-footer { position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
+  border-top: 2px solid var(--line); padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  z-index: 40; }
+#lesson-footer > * { max-width: 640px; margin-left: auto; margin-right: auto; }
+#lesson-footer.ok { background: #d7ffb8; border-color: #b5eb8e; }
+#lesson-footer.ko { background: #ffdfe0; border-color: #ffb2b2; }
+#lesson-feedback { font-size: 17px; padding: 4px 2px 10px; min-height: 0; }
+#lesson-footer.ok #lesson-feedback b { color: var(--green-dark); }
+#lesson-footer.ko #lesson-feedback b { color: var(--red); }
+.fb-ans { font-weight: 800; }
+.fb-ans .ar { font-size: 24px; }
+
+.lesson-end { text-align: center; padding: 60px 10px; }
+.end-emoji { font-size: 84px; animation: pop .4s ease; }
+.end-stars { font-size: 44px; margin: 10px 0; letter-spacing: 6px; }
+.end-xp { display: inline-block; background: var(--gold); color: #7a5b00; font-weight: 900;
+  border-radius: 12px; padding: 8px 20px; font-size: 20px; }
+.end-perfect { margin-top: 12px; color: var(--green-dark); font-weight: 800; }
+
+/* ---------- Coran ---------- */
+.search-wrap { position: sticky; top: 56px; background: var(--bg); padding: 4px 0 10px; z-index: 15; }
+#surah-search { width: 100%; border: 2px solid var(--line); border-radius: var(--radius);
+  padding: 12px 16px; font-size: 16px; font-family: inherit; outline: none; }
+#surah-search:focus { border-color: var(--blue); }
+#surah-list { display: flex; flex-direction: column; gap: 8px; }
+.surah-item { display: flex; align-items: center; gap: 12px; border: 2px solid var(--line);
+  background: #fff; border-radius: var(--radius); padding: 10px 14px; text-align: left; }
+.surah-item:hover { border-color: var(--green); }
+.surah-num { width: 38px; height: 38px; min-width: 38px; border-radius: 50%; background: var(--panel);
+  display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--green-dark); }
+.surah-names { flex: 1; display: flex; flex-direction: column; }
+.surah-names b { font-size: 16px; }
+.surah-names small { color: var(--ink-light); }
+.surah-ar { font-size: 26px; color: var(--green-dark); }
+.surah-title { text-align: center; font-size: 18px; margin: 6px 0 14px; }
+.surah-title .ar.big { font-size: 40px; color: var(--green-dark); }
+.basmala { text-align: center; font-size: 34px; color: var(--green-dark); margin: 6px 0 18px; }
+.ayah-card { border: 2px solid var(--line); border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 12px; background: #fff; }
+.ayah-card.playing { border-color: var(--green); background: #f4ffe9; }
+.ayah-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.ayah-num { font-weight: 900; color: var(--ink-light); font-size: 14px; }
+.play-btn { border-color: var(--blue); color: var(--blue-dark); }
+.ayah-ar { font-size: 30px; line-height: 2; text-align: right; }
+.ayah-ph { color: var(--blue-dark); font-style: italic; margin-top: 8px; }
+.ayah-tr { margin-top: 6px; }
+.loading { text-align: center; padding: 50px 10px; color: var(--ink-light); font-weight: 700; }
+
+/* ---------- théorie ---------- */
+.theory-intro { color: var(--ink-light); font-weight: 700; }
+#theory-list { display: flex; flex-direction: column; gap: 8px; }
+.theory-item { display: flex; align-items: center; gap: 12px; border: 2px solid var(--line);
+  background: #fff; border-radius: var(--radius); padding: 12px 14px; text-align: left; }
+.theory-item.read { border-color: #bfe8a8; background: #f6fff0; }
+.th-icon { font-size: 26px; }
+.th-names { flex: 1; display: flex; flex-direction: column; }
+.th-names small { color: var(--ink-light); }
+.th-check { font-size: 18px; color: var(--ink-light); }
+.theory-body { line-height: 1.65; }
+.theory-body .ar { font-size: 1.35em; color: var(--green-dark); }
+.theory-body .ar.big { font-size: 1.9em; }
+.th-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 15px; }
+.th-table th { background: var(--panel); text-align: left; }
+.th-table th, .th-table td { border: 1px solid var(--line); padding: 8px 10px; }
+.th-table td.ar { text-align: center; }
+.th-tip { background: #fff8e0; border: 2px solid #ffe28a; border-radius: var(--radius);
+  padding: 12px 14px; margin: 14px 0; }
+.sayable { cursor: pointer; }
+.sayable:hover { background: #eefbe6; border-radius: 6px; }
+.theory-nav { margin: 22px 0; }
+
+/* ---------- profil ---------- */
+.profile-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+.stat { border: 2px solid var(--line); border-radius: var(--radius); padding: 14px;
+  text-align: center; background: #fff; }
+.stat b { display: block; font-size: 24px; color: var(--green-dark); }
+.stat span { color: var(--ink-light); font-size: 13px; font-weight: 700; }
+.settings { margin-top: 24px; }
+.settings h3 { margin-bottom: 8px; }
+.settings label { display: block; font-weight: 800; margin: 12px 0 4px; }
+.settings select { display: block; width: 100%; margin-top: 6px; padding: 12px;
+  border: 2px solid var(--line); border-radius: var(--radius); font-size: 16px;
+  font-family: inherit; background: #fff; }
+.about { margin-top: 28px; color: var(--ink-light); font-size: 14px; border-top: 2px solid var(--line);
+  padding-top: 14px; }
+
+@media (min-width: 700px) {
+  .ex-options { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .ex-options:has(.ar) { grid-template-columns: 1fr 1fr; }
+}
