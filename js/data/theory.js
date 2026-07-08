@@ -175,6 +175,15 @@ html:`
 <tr><td><b>Madd 'ârid</b> (temporaire)</td><td>madd + arrêt de lecture</td><td>2, 4 ou 6</td><td class="ar" data-say="الْعَالَمِين">الْعَالَمِينَ ﴿arrêt﴾</td></tr>
 </table>
 <p>Dans les mushafs, le signe <span class="ar big">~</span> (madda ondulée) au-dessus d'une lettre signale un allongement long.</p>
+<p><b>L'allongement long des lettres isolées</b> : certaines sourates commencent par des lettres mystérieuses (<span class="ar">حُرُوف مُقَطَّعَة</span>, houroûf mouqatta'a) que l'on lit lettre par lettre, en allongeant généralement 6 temps :</p>
+<table class="th-table"><tr><th>Écrit</th><th>Lu</th><th>Sourate</th></tr>
+<tr><td class="ar big" data-say="أَلِفْ لَامْ مِيمْ">الٓمٓ</td><td>alif-lâm-mîm</td><td>Al-Baqara</td></tr>
+<tr><td class="ar big" data-say="يَا سِينْ">يسٓ</td><td>yâ-sîn</td><td>Yâ-Sîn</td></tr>
+<tr><td class="ar big" data-say="طَا هَا">طه</td><td>tâ-hâ</td><td>Tâ-Hâ</td></tr>
+<tr><td class="ar big" data-say="حَا مِيمْ">حمٓ</td><td>hâ-mîm</td><td>Ghâfir → Al-Ahqâf</td></tr>
+<tr><td class="ar big" data-say="أَلِفْ لَامْ رَا">الٓر</td><td>alif-lâm-râ</td><td>Yoûnous → Al-Hijr</td></tr>
+<tr><td class="ar big" data-say="كَافْ هَا يَا عَيْنْ صَادْ">كٓهيعٓصٓ</td><td>kâf-hâ-yâ-'aïn-sâd</td><td>Maryam</td></tr>
+</table>
 <div class="th-tip">💡 Un « temps » (haraka) ≈ le temps de plier ou déplier un doigt, à ton rythme de lecture.</div>
 `},
 { key:"ch15", icon:"💥", title:"La qalqala", sub:"Le rebond de ق ط ب ج د",

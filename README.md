@@ -18,7 +18,8 @@ Application web progressive (PWA) pour apprendre à lire l'arabe **en s'amusant*
 - **Niveau 2** — L'alphabet mélangé + reconnaissance à l'écoute
 - **Niveau 3** — Les formes des lettres (début, milieu, fin, isolée) — LA difficulté de l'arabe
 - **Niveau 4** — Lire les syllabes : fatha, kasra, damma, soukoun, shadda, tanwin, voyelles longues
-- **Niveaux 5+** — **320 mots du Coran** en 32 leçons thématiques (Al-Fâtiha, les Noms d'Allah, la création, les prophètes, le Jour dernier, verbes, particules fréquentes…)
+- **Niveau 5** — **Le cours de lecture** : les 12 exercices du cours « Apprendre à Lire l'arabe » (PDF, 4 parties), page par page — fatha, kasra, damma, soukoun, shadda, madd, tanwin, lecture du mot Allah, tâ marbouta, jusqu'au récapitulatif sur de vrais mots du Coran
+- **Niveaux 6+** — **320 mots du Coran** en 32 leçons thématiques (Al-Fâtiha, les Noms d'Allah, la création, les prophètes, le Jour dernier, verbes, particules fréquentes…)
 - **Bonus** — Mots les plus fréquents du Coran, construction de mots lettre par lettre, exercices d'écoute, examen final
 - Cœurs ❤️, XP, étoiles ⭐, série de jours 🔥 — progression sauvegardée
 

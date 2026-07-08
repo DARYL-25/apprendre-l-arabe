@@ -100,7 +100,10 @@ window.Game = (function(){
         { key:"u4l6", title:"Shadda — lettres doublées",  gen:() => bankLesson(SHADDA_BANK) },
         { key:"u4l7", title:"Le tanwin (an, in, oun)",    gen:() => bankLesson(TANWIN_BANK) },
         { key:"u4l8", title:"⭐ Voyelles longues (â î oû)", gen:() => bankLesson(LONG_BANK) }
-      ]}
+      ]},
+      // Niveau 5 : les exercices exacts du cours PDF « Apprendre à Lire l'arabe »
+      { key:"u5", title:"Niveau 5 · Le cours de lecture", icon:"📕", color:"#00cd9c",
+        lessons: PDF_COURSE.map(b => ({ key:b.key, title:b.title, gen:() => pdfLesson(b) })) }
     ].concat(vocabUnits()).concat([
       { key:"ub", title:"Bonus · Objectif bilingue", icon:"🏆", color:"#ffc800", lessons:[
         { key:"ubl1", title:"Top des mots les plus fréquents", gen:() => top30Lesson() },
@@ -200,6 +203,22 @@ window.Game = (function(){
       shuffle(LETTERS.filter(x => x.ar !== l.ar && x.ar !== "ا")).forEach(d => cands.push({ label: phWith(d, v) }));
       return { type:"qcm", title:"Comment se lit cette syllabe ?", prompt:syll, say:syll,
         options: mkOptions({ label: phWith(l, v), ok:true }, cands) };
+    });
+  }
+
+  // leçons « cours de lecture » : mots du PDF, options tirées de la même page
+  function pdfLesson(bank){
+    return shuffle(bank.words).map((w, i) => {
+      const others = () => shuffle(bank.words.filter(x => x !== w));
+      const mode = i % 3;
+      if (mode === 0)
+        return { type:"qcm", title:"Comment se lit ce mot ?", prompt:w.ar, say:w.ar,
+          options: mkOptions({ label:w.ph, ok:true }, others().map(d => ({ label:d.ph }))) };
+      if (mode === 1)
+        return { type:"qcm", title:"Trouve le mot : « " + w.ph + " »", say:w.ar,
+          options: mkOptions({ label:w.ar, ar:true, ok:true }, others().map(d => ({ label:d.ar, ar:true }))) };
+      return { type:"qcm", title:"Écoute et choisis le mot 🔊", autoSay:true, say:w.ar,
+        options: mkOptions({ label:w.ar, ar:true, ok:true }, others().map(d => ({ label:d.ar, ar:true }))) };
     });
   }
 
