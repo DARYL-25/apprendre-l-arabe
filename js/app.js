@@ -15,22 +15,26 @@ window.State = (function(){
   function set(patch){ Object.assign(s, patch); save(); }
 
   function today(){ return new Date().toISOString().slice(0, 10); }
-  function completeLesson(key, stars, xp){
-    const prev = s.done[key];
-    if (!prev || stars > prev.stars) s.done[key] = { stars };
-    s.xp += xp;
+  function touchStreak(){
     const t = today();
     if (s.streak.last !== t) {
       const y = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
       s.streak.count = (s.streak.last === y) ? s.streak.count + 1 : 1;
       s.streak.last = t;
     }
+  }
+  function completeLesson(key, stars, xp){
+    const prev = s.done[key];
+    if (!prev || stars > prev.stars) s.done[key] = { stars };
+    s.xp += xp;
+    touchStreak();
     save();
   }
+  function addXp(xp){ s.xp += xp; touchStreak(); save(); }
   function markTheory(key){ s.theoryRead[key] = true; save(); }
   function trWord(w){ return w[s.lang] || w.fr; }
 
-  return { get, set, save, completeLesson, markTheory, trWord };
+  return { get, set, save, completeLesson, addXp, markTheory, trWord };
 })();
 
 // ---------- Navigation ----------
@@ -58,6 +62,21 @@ window.App = (function(){
     el("home-streak").textContent = "🔥 " + State.get().streak.count;
     const cont = el("path");
     cont.innerHTML = "";
+    // Entraînement infini
+    const inf = document.createElement("div");
+    inf.className = "infinity-card";
+    inf.innerHTML =
+      '<b>♾️ Entraînement infini</b>' +
+      '<p>Sans cœurs, sans fin : toutes les combinaisons possibles, remélangées seulement une fois épuisées — le minimum de répétitions. +1 XP par bonne réponse.</p>' +
+      '<div class="inf-btns">' +
+      '<button data-inf="letters">🔤 Lettres</button>' +
+      '<button data-inf="forms">✍️ Formes</button>' +
+      '<button data-inf="reading">🎵 Syllabes & lecture</button>' +
+      '<button data-inf="words">📚 Mots du Coran</button>' +
+      '<button data-inf="ultimate" class="ultimate">🌟 ULTIME — tout mélangé</button>' +
+      '</div>';
+    inf.querySelectorAll("[data-inf]").forEach(b => b.onclick = () => Game.startInfinite(b.dataset.inf));
+    cont.appendChild(inf);
     let unlocked = true; // la 1re leçon est toujours ouverte ; ensuite chaîne linéaire
     let prevDone = true;
     Game.UNITS.forEach(unit => {

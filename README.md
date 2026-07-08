@@ -22,6 +22,7 @@ Application web progressive (PWA) pour apprendre à lire l'arabe **en s'amusant*
 - **Niveaux 6+** — **320 mots du Coran** en 32 leçons thématiques (Al-Fâtiha, les Noms d'Allah, la création, les prophètes, le Jour dernier, verbes, particules fréquentes…)
 - **Bonus** — Mots les plus fréquents du Coran, construction de mots lettre par lettre, exercices d'écoute, examen final
 - Cœurs ❤️, XP, étoiles ⭐, série de jours 🔥 — progression sauvegardée
+- **♾️ Entraînement infini** (sans cœurs, sans fin) : 5 modes — Lettres (28 lettres × 4 directions : lettre→phonétique, phonétique→lettre, son→lettre, son→phonétique), Formes (28 lettres × 4 positions × 4 directions), Syllabes & lecture (toutes les syllabes + tous les mots du cours), Mots du Coran (320 mots × 6 directions) et le mode ULTIME qui mélange absolument tout (~5 700 combinaisons). Chaque paquet de combinaisons est parcouru intégralement avant d'être remélangé → le minimum de répétitions possible ; les erreurs reviennent quelques questions plus tard.
 
 ### Le Coran 📖
 - Les **114 sourates** : texte arabe + **phonétique** + **traduction**

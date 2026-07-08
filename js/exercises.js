@@ -10,6 +10,22 @@ window.Game = (function(){
   function sample(a, n){ return shuffle(a).slice(0, n); }
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
 
+  // Mélange « intelligent » : évite que le même élément (id) apparaisse deux fois de suite
+  function smartShuffle(arr){
+    const a = shuffle(arr);
+    for (let i = 1; i < a.length; i++) {
+      if (a[i].id === a[i-1].id) {
+        for (let j = i + 1; j < a.length; j++) {
+          if (a[j].id !== a[i-1].id && (i + 1 >= a.length || a[j].id !== a[i+1].id)) {
+            [a[i], a[j]] = [a[j], a[i]];
+            break;
+          }
+        }
+      }
+    }
+    return a;
+  }
+
   // Construit 4 options uniques : la bonne + 3 distracteurs (candidats pris dans l'ordre)
   function mkOptions(correct, candidates){
     const seen = new Set([correct.label]);
@@ -236,23 +252,33 @@ window.Game = (function(){
     return same.concat(shuffle(others)).map(map);
   }
 
-  function vocabLesson(g){
-    const words = shuffle(g.words);
-    return words.map((w, i) => {
-      const mode = i % 4;
-      if (mode === 0)      // arabe → traduction
+  // un exercice de vocabulaire, dans une direction donnée
+  function wordEx(g, w, m){
+    switch (m) {
+      case "ar2tr":    // arabe → traduction
         return { type:"qcm", title:"Que signifie ce mot ?", prompt:w.ar, sub:w.ph, say:w.ar,
           options: mkOptions({ label: State.trWord(w), ok:true }, vocabCands(g, w, d => ({ label: State.trWord(d) }))) };
-      else if (mode === 1) // traduction → arabe
+      case "tr2ar":    // traduction → arabe
         return { type:"qcm", title:"Comment dit-on « " + State.trWord(w) + " » ?", say:w.ar,
           options: mkOptions({ label:w.ar, ar:true, ok:true }, vocabCands(g, w, d => ({ label:d.ar, ar:true }))) };
-      else if (mode === 2) // arabe → phonétique
+      case "ar2ph":    // arabe → phonétique
         return { type:"qcm", title:"Comment se prononce ce mot ?", prompt:w.ar, sub:State.trWord(w), say:w.ar,
           options: mkOptions({ label:w.ph, ok:true }, vocabCands(g, w, d => ({ label:d.ph }))) };
-      else                 // écoute → traduction
-        return { type:"qcm", title:"Écoute et choisis le bon sens 🔊", autoSay:true, say:w.ar, prompt:null,
+      case "ph2ar":    // phonétique → arabe
+        return { type:"qcm", title:"Trouve : « " + w.ph + " » (" + State.trWord(w) + ")", say:w.ar,
+          options: mkOptions({ label:w.ar, ar:true, ok:true }, vocabCands(g, w, d => ({ label:d.ar, ar:true }))) };
+      case "audio2tr": // écoute → traduction
+        return { type:"qcm", title:"Écoute et choisis le bon sens 🔊", autoSay:true, say:w.ar,
           options: mkOptions({ label: State.trWord(w) + " (" + w.ph + ")", ok:true }, vocabCands(g, w, d => ({ label: State.trWord(d) + " (" + d.ph + ")" }))) };
-    });
+      default:         // audio2ar : écoute → mot écrit
+        return { type:"qcm", title:"Écoute et trouve le mot écrit 🔊", autoSay:true, say:w.ar,
+          options: mkOptions({ label:w.ar, ar:true, ok:true }, vocabCands(g, w, d => ({ label:d.ar, ar:true }))) };
+    }
+  }
+
+  function vocabLesson(g){
+    const MODES = ["ar2tr", "tr2ar", "ar2ph", "audio2tr"];
+    return shuffle(g.words).map((w, i) => wordEx(g, w, MODES[i % 4]));
   }
 
   function frequentWords(){
@@ -289,6 +315,124 @@ window.Game = (function(){
     return shuffle(parts);
   }
 
+  // ============================================================
+  // MODE INFINI — paquets de combinaisons exhaustifs
+  // Chaque paquet contient TOUTES les combinaisons (élément × direction) ;
+  // il est mélangé sans deux fois le même élément d'affilée, et n'est
+  // remélangé qu'une fois entièrement épuisé → le minimum de répétitions.
+  // ============================================================
+
+  // -- lettres : 28 lettres × 4 directions = 112 combinaisons
+  function letterEx(l, m){
+    const disName = () => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label:d.name }));
+    const disAr   = () => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label:d.ar, ar:true }));
+    if (m === "ar2name")
+      return { type:"qcm", title:"Quelle est cette lettre ?", prompt:l.ar, say:l.arName,
+        options: mkOptions({ label:l.name, ok:true }, disName()) };
+    if (m === "name2ar")
+      return { type:"qcm", title:"Comment s'écrit « " + l.name + " » ?", say:l.arName,
+        options: mkOptions({ label:l.ar, ar:true, ok:true }, disAr()) };
+    if (m === "audio2ar")
+      return { type:"qcm", title:"Écoute et choisis la lettre 🔊", autoSay:true, say:l.arName,
+        options: mkOptions({ label:l.ar, ar:true, ok:true }, disAr()) };
+    return { type:"qcm", title:"Écoute : quelle lettre entends-tu ? 🔊", autoSay:true, say:l.arName,
+      options: mkOptions({ label:l.name, ok:true }, disName()) };
+  }
+  function letterCombos(){
+    const combos = [];
+    LETTERS.forEach(l => ["ar2name","name2ar","audio2ar","audio2name"].forEach(m =>
+      combos.push({ id:l.ar, make:() => letterEx(l, m) })));
+    return combos;
+  }
+
+  // -- formes : 28 lettres × 4 positions × 4 directions = 448 combinaisons
+  const ALL_POS = ["isolated","initial","medial","final"];
+  function posLabel(pos){ return pos === "isolated" ? "sous sa forme isolée" : POS_FR[pos] + " du mot"; }
+  function formEx(l, pos, m){
+    const disName  = () => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label:d.name }));
+    const disForms = p => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label: formOf(d, p), ar:true }));
+    if (m === "form2name")
+      return { type:"qcm", title:"Quelle lettre est écrite ici (" + posLabel(pos) + ") ?", prompt: formOf(l, pos), say:l.arName,
+        options: mkOptions({ label:l.name, ok:true }, disName()) };
+    if (m === "name2form")
+      return { type:"qcm", title:"Comment s'écrit « " + l.name + " » " + posLabel(pos) + " ?", say:l.arName,
+        options: mkOptions({ label: formOf(l, pos), ar:true, ok:true }, disForms(pos)) };
+    if (m === "audio2form")
+      return { type:"qcm", title:"Écoute et choisis sa forme " + posLabel(pos) + " 🔊", autoSay:true, say:l.arName,
+        options: mkOptions({ label: formOf(l, pos), ar:true, ok:true }, disForms(pos)) };
+    // cross : d'une position vers une autre
+    const from = pick(ALL_POS.filter(p => p !== pos));
+    return { type:"qcm", title:"Voici une lettre " + posLabel(from) + ". Quelle est sa forme " + posLabel(pos) + " ?",
+      prompt: formOf(l, from), say:l.arName,
+      options: mkOptions({ label: formOf(l, pos), ar:true, ok:true }, disForms(pos)) };
+  }
+  function formCombos(){
+    const combos = [];
+    LETTERS.forEach(l => ALL_POS.forEach(pos => ["form2name","name2form","audio2form","cross"].forEach(m =>
+      combos.push({ id:l.ar, make:() => formEx(l, pos, m) }))));
+    return combos;
+  }
+
+  // -- syllabes et lecture : syllabes (27 × 3 × 3) + tous les mots des banques × 3 directions
+  function syllEx(l, v, m){
+    const syll = l.ar + SIGNS[v];
+    const phCands = () => {
+      const c = [];
+      ["a","i","ou"].forEach(x => { if (x !== v) c.push({ label: phWith(l, x) }); });
+      shuffle(LETTERS.filter(x => x.ar !== l.ar && x.ar !== "ا")).forEach(d => c.push({ label: phWith(d, v) }));
+      return c;
+    };
+    const arCands = () => shuffle(
+      LETTERS.filter(x => x.ar !== l.ar && x.ar !== "ا").map(d => ({ label: d.ar + SIGNS[v], ar:true }))
+        .concat(["a","i","ou"].filter(x => x !== v).map(x => ({ label: l.ar + SIGNS[x], ar:true }))));
+    if (m === "ar2ph")
+      return { type:"qcm", title:"Comment se lit cette syllabe ?", prompt:syll, say:syll,
+        options: mkOptions({ label: phWith(l, v), ok:true }, phCands()) };
+    if (m === "ph2ar")
+      return { type:"qcm", title:"Trouve la syllabe : « " + phWith(l, v) + " »", say:syll,
+        options: mkOptions({ label:syll, ar:true, ok:true }, arCands()) };
+    return { type:"qcm", title:"Écoute et choisis la syllabe 🔊", autoSay:true, say:syll,
+      options: mkOptions({ label:syll, ar:true, ok:true }, arCands()) };
+  }
+  function bankEx(w, bank, m){
+    const othersPh = () => (w.d || []).map(d => ({ label:d })).concat(shuffle(bank.filter(x => x !== w)).map(d => ({ label:d.ph })));
+    const othersAr = () => shuffle(bank.filter(x => x !== w)).map(d => ({ label:d.ar, ar:true }));
+    if (m === "ar2ph")
+      return { type:"qcm", title:"Comment se lit ce mot ?", prompt:w.ar, say:w.ar,
+        options: mkOptions({ label:w.ph, ok:true }, othersPh()) };
+    if (m === "ph2ar")
+      return { type:"qcm", title:"Trouve le mot : « " + w.ph + " »", say:w.ar,
+        options: mkOptions({ label:w.ar, ar:true, ok:true }, othersAr()) };
+    return { type:"qcm", title:"Écoute et choisis le mot 🔊", autoSay:true, say:w.ar,
+      options: mkOptions({ label:w.ar, ar:true, ok:true }, othersAr()) };
+  }
+  function readingCombos(){
+    const combos = [];
+    LETTERS.filter(l => l.ar !== "ا").forEach(l => ["a","i","ou"].forEach(v => ["ar2ph","ph2ar","audio2ar"].forEach(m =>
+      combos.push({ id:l.ar + v, make:() => syllEx(l, v, m) }))));
+    const banks = PDF_COURSE.map(b => b.words).concat([SUKUN_BANK, SHADDA_BANK, TANWIN_BANK, LONG_BANK]);
+    banks.forEach(bank => bank.forEach(w => ["ar2ph","ph2ar","audio2ar"].forEach(m =>
+      combos.push({ id:w.ar, make:() => bankEx(w, bank, m) }))));
+    return combos;
+  }
+
+  // -- mots : 320 mots × 6 directions = 1920 combinaisons
+  function wordCombos(){
+    const combos = [];
+    VOCAB.forEach(g => g.words.forEach(w => ["ar2tr","tr2ar","ar2ph","ph2ar","audio2tr","audio2ar"].forEach(m =>
+      combos.push({ id:w.ar, make:() => wordEx(g, w, m) }))));
+    return combos;
+  }
+
+  const INFINITE_DECKS = {
+    letters:  { title:"🔤 Lettres à l'infini",            build: letterCombos },
+    forms:    { title:"✍️ Formes à l'infini",             build: formCombos },
+    reading:  { title:"🎵 Syllabes et lecture à l'infini", build: readingCombos },
+    words:    { title:"📚 Mots du Coran à l'infini",      build: wordCombos },
+    ultimate: { title:"🌟 Mode ULTIME — tout mélangé",
+                build: () => letterCombos().concat(formCombos(), readingCombos(), wordCombos()) }
+  };
+
   // ---------- runner : déroulement d'une leçon ----------
   const UNITS = buildUnits();
   const FLAT = []; UNITS.forEach(u => u.lessons.forEach(l => FLAT.push(l)));
@@ -305,13 +449,34 @@ window.Game = (function(){
     renderExercise();
   }
 
+  function startInfinite(kind){
+    const def = INFINITE_DECKS[kind];
+    if (!def) return;
+    const base = def.build();
+    cur = { infinite:true, kind, title:def.title, base, deck: smartShuffle(base.slice()),
+            idx:0, correct:0, wrong:0, combo:0, best:0, cycle:0, selected:-1, answered:false };
+    App.show("screen-lesson");
+    renderExercise();
+  }
+
   function renderHeader(){
+    if (cur.infinite) {
+      el("lesson-progress-fill").style.width = Math.round(100 * cur.idx / cur.deck.length) + "%";
+      el("lesson-hearts").textContent = "♾️ ✅" + cur.correct + " 🔥" + cur.combo;
+      return;
+    }
     el("lesson-progress-fill").style.width = Math.round(100 * cur.idx / cur.exercises.length) + "%";
     el("lesson-hearts").textContent = "❤️".repeat(cur.hearts) + "🖤".repeat(3 - cur.hearts);
   }
 
+  function currentEx(){
+    if (!cur.infinite) return cur.exercises[cur.idx];
+    if (!cur.ex) cur.ex = cur.deck[cur.idx].make();
+    return cur.ex;
+  }
+
   function renderExercise(){
-    const ex = cur.exercises[cur.idx];
+    const ex = currentEx();
     cur.selected = -1; cur.answered = false;
     renderHeader();
     const body = el("lesson-body");
@@ -388,7 +553,7 @@ window.Game = (function(){
   }
 
   function check(){
-    const ex = cur.exercises[cur.idx];
+    const ex = currentEx();
     if (!cur.answered) {
       let ok, correctLabel;
       if (ex.type === "build") {
@@ -407,13 +572,30 @@ window.Game = (function(){
         });
       }
       cur.answered = true;
-      if (!ok) { cur.mistakes++; cur.hearts--; renderHeader(); }
+      if (cur.infinite) {
+        if (ok) { cur.correct++; cur.combo++; cur.best = Math.max(cur.best, cur.combo); }
+        else {   // pas de cœurs perdus : la combinaison ratée revient un peu plus tard
+          cur.wrong++; cur.combo = 0;
+          const pos = Math.min(cur.idx + 4, cur.deck.length);
+          cur.deck.splice(pos, 0, cur.deck[cur.idx]);
+        }
+        renderHeader();
+      } else if (!ok) { cur.mistakes++; cur.hearts--; renderHeader(); }
       if (ok && ex.say) Audio_.say(ex.say);
       setFooter("next", ok, correctLabel);
-      if (cur.hearts <= 0) { setTimeout(showFail, 900); return; }
+      if (!cur.infinite && cur.hearts <= 0) { setTimeout(showFail, 900); return; }
     } else {
       cur.idx++;
-      if (cur.idx >= cur.exercises.length) showEnd();
+      cur.ex = null;
+      if (cur.infinite) {
+        if (cur.idx >= cur.deck.length) {   // paquet épuisé : on remélange tout
+          cur.deck = smartShuffle(cur.base.slice());
+          cur.idx = 0;
+          cur.cycle++;
+        }
+        renderExercise();
+      }
+      else if (cur.idx >= cur.exercises.length) showEnd();
       else renderExercise();
     }
   }
@@ -457,7 +639,35 @@ window.Game = (function(){
     check();
   }
 
+  // bilan de fin d'entraînement infini (déclenché par ✕)
+  function showInfiniteEnd(){
+    const total = cur.correct + cur.wrong;
+    const xp = cur.correct;   // 1 XP par bonne réponse
+    if (xp > 0) State.addXp(xp);
+    const pct = total ? Math.round(100 * cur.correct / total) : 0;
+    el("lesson-body").innerHTML =
+      '<div class="lesson-end">' +
+      '<div class="end-emoji">♾️</div>' +
+      '<h2>Bel entraînement !</h2>' +
+      '<p>' + cur.title + '</p>' +
+      '<div class="inf-stats">' +
+      '<div class="stat"><b>' + total + '</b><span>questions</span></div>' +
+      '<div class="stat"><b>' + pct + '%</b><span>de réussite</span></div>' +
+      '<div class="stat"><b>🔥 ' + cur.best + '</b><span>meilleure série</span></div>' +
+      '<div class="stat"><b>' + cur.cycle + '</b><span>paquets complets</span></div>' +
+      '</div>' +
+      '<div class="end-xp">+' + xp + ' XP</div>' +
+      '</div>';
+    el("lesson-feedback").innerHTML = "";
+    const f = el("lesson-footer"); f.classList.remove("ok","ko");
+    const btn = el("btn-check"); btn.textContent = "CONTINUER"; btn.disabled = false;
+    cur.done = true;
+  }
+
   function quit(){
+    if (cur && cur.infinite && !cur.done) {
+      if (cur.correct + cur.wrong > 0) { showInfiniteEnd(); return; }
+    }
     Audio_.stopAyah?.();
     App.renderHome();
     App.show("screen-home");
@@ -468,5 +678,5 @@ window.Game = (function(){
     el("btn-quit-lesson").onclick = quit;
   }
 
-  return { UNITS, FLAT, start, init };
+  return { UNITS, FLAT, start, startInfinite, INFINITE_DECKS, init };
 })();
