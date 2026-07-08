@@ -121,9 +121,15 @@ window.App = (function(){
   }
 
   function alphabetTable(){
-    return '<table class="th-table alpha"><tr><th>Lettre</th><th>Nom</th><th>Son</th></tr>' +
-      LETTERS.map(l => '<tr><td class="ar big" data-say="' + l.arName + '">' + l.ar + '</td><td><b>' + l.name + '</b></td><td>' + l.sound + '</td></tr>').join("") +
-      '</table>';
+    return '<div class="letter-cards">' +
+      LETTERS.map(l =>
+        '<div class="letter-card">' +
+        '<div class="lc-letter ar" data-say="' + l.arName + '">' + l.ar + '<span class="lc-spk">🔊</span></div>' +
+        '<div class="lc-info">' +
+        '<b>' + l.name + '</b> — ' + l.sound +
+        '<div class="lc-artic">🗣️ ' + l.artic + '</div>' +
+        '</div></div>').join("") +
+      '</div>';
   }
   function formsTable(){
     const T = "ـ";
@@ -159,6 +165,13 @@ window.App = (function(){
       .replace("{{HARAKAT_TABLE}}", harakatTable());
     const body = el("theory-body");
     body.innerHTML = html;
+    // tableaux défilants sur mobile (l'arabe agrandi ne casse jamais la mise en page)
+    body.querySelectorAll(".th-table").forEach(t => {
+      const wrap = document.createElement("div");
+      wrap.className = "th-scroll";
+      t.parentNode.insertBefore(wrap, t);
+      wrap.appendChild(t);
+    });
     // boutons audio sur tout [data-say]
     body.querySelectorAll("[data-say]").forEach(n => {
       n.classList.add("sayable");
@@ -248,8 +261,9 @@ window.App = (function(){
     Quran.renderList();
     initOnboarding();
     show("screen-home");
-    // PWA : service worker
-    if ("serviceWorker" in navigator) {
+    // PWA : service worker (désactivé en local pour ne pas gêner le développement)
+    const isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    if ("serviceWorker" in navigator && !isLocal) {
       navigator.serviceWorker.register("sw.js").catch(() => {});
     }
   }

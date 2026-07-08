@@ -1,6 +1,6 @@
 // Iqra' — Service worker : app disponible hors-ligne (sauf Coran/audio, qui
 // nécessitent internet la première fois puis sont mis en cache à la volée).
-const CACHE = "iqra-v3";
+const CACHE = "iqra-v5";
 const SHELL = [
   "./", "index.html", "css/style.css", "manifest.webmanifest",
   "js/data/letters.js", "js/data/vocab.js", "js/data/pdfcourse.js", "js/data/surahs.js", "js/data/theory.js",
@@ -9,7 +9,13 @@ const SHELL = [
 ];
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  // cache:"reload" force le réseau : le précache ne peut pas hériter de vieux
+  // fichiers restés dans le cache HTTP du navigateur
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => c.addAll(SHELL.map(u => new Request(u, { cache: "reload" }))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", e => {
