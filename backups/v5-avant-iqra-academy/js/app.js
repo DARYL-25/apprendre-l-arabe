@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — Application : état, navigation, accueil, théorie, profil
+// Iqra' — Application : état, navigation, accueil, théorie, profil
 // ============================================================
 
 // ---------- État persistant ----------
@@ -82,7 +82,7 @@ window.App = (function(){
     Game.UNITS.forEach(unit => {
       const uDiv = document.createElement("div");
       uDiv.className = "unit";
-      uDiv.innerHTML = '<div class="unit-head" style="--c:' + unit.color + '"><span class="unit-icon">' + unit.icon + '</span><div><b>' + unit.title + '</b></div></div>';
+      uDiv.innerHTML = '<div class="unit-head" style="background:' + unit.color + '"><span class="unit-icon">' + unit.icon + '</span><div><b>' + unit.title + '</b></div></div>';
       const lessonsDiv = document.createElement("div");
       lessonsDiv.className = "unit-lessons";
       unit.lessons.forEach(lesson => {

@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — Moteur de jeu : unités, leçons, exercices (style Duolingo)
+// Iqra' — Moteur de jeu : unités, leçons, exercices (style Duolingo)
 // ============================================================
 window.Game = (function(){
 

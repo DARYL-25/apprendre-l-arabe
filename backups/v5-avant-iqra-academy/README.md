@@ -1,4 +1,4 @@
-# Iqra Academy (اقرأ) — Apprendre à lire l'arabe et le Coran
+# Iqra' (اقرأ) — Apprendre à lire l'arabe et le Coran
 
 Application web progressive (PWA) pour apprendre à lire l'arabe **en s'amusant**, avec pour objectif de lire et comprendre le Coran.
 
@@ -30,16 +30,10 @@ Application web progressive (PWA) pour apprendre à lire l'arabe **en s'amusant*
 - Écoute verset par verset ou lecture continue avec suivi visuel
 
 ### Théorie 🧠
-**22 chapitres exhaustifs** — l'application se veut la seule ressource nécessaire pour apprendre à lire parfaitement l'arabe et le Coran :
-- **Les lettres** (1-4) : alphabet avec points d'articulation (makhraj), lettres sœurs, lettres emphatiques (خص ضغط قظ) et lettres de gorge, les 4 formes et les 6 lettres non-connectantes, ligatures
-- **Les signes** (5-11) : voyelles courtes, soukoun, shadda, tanwin, voyelles longues et diphtongues, alif suscrit, **tâ marboûta** (marque du féminin, « t » en liaison / « h » à l'arrêt), **alif maqsoûra**
-- **Le mot** (12-14) : hamza (6 formes, hamzat al-qat' vs hamzat al-wasl), lettres solaires/lunaires, lettres muettes et signes du mushaf
-- **Lire le Coran** (15-16) : **waqf & wasl** — règles complètes d'arrêt et de liaison (suppression de la voyelle finale, exception du tanwin fath → « â », tâ marboûta → « h », shadda conservée, hamzat al-wasl muette, rencontre de deux soukoun), isti'âdha, basmala, symboles d'arrêt
-- **Le tajwid** (17-22) : madd (7 types + lettres isolées), qalqala, ghounna, noûn sâkina et tanwin (izhâr/idghâm/iqlâb/ikhfâ'), mîm sâkina, tafkhîm/tarqîq du râ et du lâm d'Allah, les erreurs (lahn) et la méthode
+18 chapitres progressifs, du niveau zéro jusqu'au tajwid : alphabet, formes des lettres, lettres sœurs, voyelles, tanwin, soukoun, shadda, voyelles longues, tâ marbouta, alif maqsoura, hamza, lettres solaires/lunaires, symboles d'arrêt, règles de prolongation (madd), qalqala, noûn sâkina (izhâr/idghâm/iqlâb/ikhfâ'), mîm sâkina, emphase (tafkhîm/tarqîq).
 
 ### Personnalisation
 - **Voix masculine ou féminine** pour la prononciation (synthèse vocale arabe de l'appareil)
-- **Design Iqra Academy** : nuit émeraude & or, polices Baloo 2 / Fredoka One / Amiri
 - **Langue de traduction** : 🇫🇷 français, 🇬🇧 anglais, 🇹🇷 turc, 🇮🇩 indonésien, 🇵🇰 ourdou
 
 ## 🔧 Technique

@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — Moteur audio : synthèse vocale arabe (voix homme/femme)
+// Iqra' — Moteur audio : synthèse vocale arabe (voix homme/femme)
 // + lecteur des récitations du Coran (cdn.islamic.network)
 // ============================================================
 window.Audio_ = (function(){

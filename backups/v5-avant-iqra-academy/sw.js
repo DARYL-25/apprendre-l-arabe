@@ -1,6 +1,6 @@
-// Iqra Academy — Service worker : app disponible hors-ligne (sauf Coran/audio, qui
+// Iqra' — Service worker : app disponible hors-ligne (sauf Coran/audio, qui
 // nécessitent internet la première fois puis sont mis en cache à la volée).
-const CACHE = "iqra-academy-v6";
+const CACHE = "iqra-v5";
 const SHELL = [
   "./", "index.html", "css/style.css", "manifest.webmanifest",
   "js/data/letters.js", "js/data/vocab.js", "js/data/pdfcourse.js", "js/data/surahs.js", "js/data/theory.js",

@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — Les 114 sourates du Coran
+// Iqra' — Les 114 sourates du Coran
 // n° / nom arabe / translittération / nom français / nb versets / lieu (M = mecquoise, Md = médinoise)
 // ============================================================
 window.SURAHS = [

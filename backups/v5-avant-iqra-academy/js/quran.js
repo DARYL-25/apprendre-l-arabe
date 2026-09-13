@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — Section Coran : liste des sourates + lecteur
+// Iqra' — Section Coran : liste des sourates + lecteur
 // Texte arabe (Uthmani) + phonétique + traduction via api.alquran.cloud
 // Audio par verset via cdn.islamic.network (récitateur au choix)
 // ============================================================

@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — L'alphabet arabe (28 lettres)
+// Iqra' — L'alphabet arabe (28 lettres)
 // ph : phonétique "à la française" (comme le PDF modèle)
 // arName : nom de la lettre en arabe (pour le voiceover TTS)
 // joins : false = lettre qui ne s'attache PAS à la lettre suivante

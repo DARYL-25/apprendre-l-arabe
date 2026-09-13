@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — « Le cours de lecture » : les exercices exacts du cours
+// Iqra' — « Le cours de lecture » : les exercices exacts du cours
 // « Apprendre à Lire l'arabe » (PDF en 4 parties, 44 pages)
 // Chaque banque = les mots d'une page d'exercice du PDF, avec phonétique.
 // ============================================================

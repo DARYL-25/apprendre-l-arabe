@@ -1,5 +1,5 @@
 // ============================================================
-// Iqra Academy — Vocabulaire du Coran : 320 mots en 32 leçons thématiques
+// Iqra' — Vocabulaire du Coran : 320 mots en 32 leçons thématiques
 // ar = arabe vocalisé · ph = phonétique · fr/en/tr/id/ur = traductions
 // (tr = turc, id = indonésien, ur = ourdou) · f:1 = parmi les plus fréquents du Coran
 // ============================================================
