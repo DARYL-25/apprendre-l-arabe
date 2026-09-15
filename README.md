@@ -55,3 +55,6 @@ Application web progressive (PWA) pour apprendre à lire l'arabe **en s'amusant*
 python -m http.server 8123
 # puis ouvrir http://localhost:8123
 ```
+
+## 📱 Version mobile, comptes et publication
+Voir **[GUIDE-PUBLICATION.md](GUIDE-PUBLICATION.md)** : Firebase (comptes), Premium/dons, Google Play et App Store (dossier `mobile/`).

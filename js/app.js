@@ -10,7 +10,10 @@ window.State = (function(){
   s = Object.assign({ voice:"m", lang:"fr", reciter:"ar.alafasy", xp:0,
                       streak:{ count:0, last:null }, done:{}, theoryRead:{}, onboarded:false }, s);
 
-  function save(){ localStorage.setItem(KEY, JSON.stringify(s)); }
+  function save(){
+    localStorage.setItem(KEY, JSON.stringify(s));
+    if (window.Cloud) Cloud.scheduleSync();   // copie en ligne si connecté
+  }
   function get(){ return s; }
   function set(patch){ Object.assign(s, patch); save(); }
 
@@ -53,36 +56,42 @@ window.App = (function(){
   }
 
   // ---------- Accueil : le parcours ----------
+  const UNIT_ICONS = { u1:"type", u2:"shuffle", u3:"pen", u4:"music", u5:"bookopen", ub:"trophy" };
   function starsFor(key){
     const d = State.get().done[key];
     return d ? d.stars : 0;
   }
   function renderHome(){
     el("home-xp").textContent = State.get().xp + " XP";
-    el("home-streak").textContent = "🔥 " + State.get().streak.count;
+    el("home-streak").innerHTML = Icon("flame") + State.get().streak.count;
     const cont = el("path");
     cont.innerHTML = "";
     // Entraînement infini
     const inf = document.createElement("div");
     inf.className = "infinity-card";
     inf.innerHTML =
-      '<b>♾️ Entraînement infini</b>' +
+      '<b>' + Icon("infinity") + 'Entraînement infini</b>' +
       '<p>Sans cœurs, sans fin : toutes les combinaisons possibles, remélangées seulement une fois épuisées — le minimum de répétitions. +1 XP par bonne réponse.</p>' +
+      (Premium.isActive()
+        ? '<p class="inf-quota">' + Icon("crown") + 'Premium : illimité</p>'
+        : '<p class="inf-quota">Gratuit : <b>' + Premium.freeLeft() + '</b> question' + (Premium.freeLeft() > 1 ? 's' : '') + ' restante' + (Premium.freeLeft() > 1 ? 's' : '') + ' aujourd\'hui · <button class="btn-link" id="inf-go-premium">Passer en illimité</button></p>') +
       '<div class="inf-btns">' +
-      '<button data-inf="letters">🔤 Lettres</button>' +
-      '<button data-inf="forms">✍️ Formes</button>' +
-      '<button data-inf="reading">🎵 Syllabes & lecture</button>' +
-      '<button data-inf="words">📚 Mots du Coran</button>' +
-      '<button data-inf="ultimate" class="ultimate">🌟 ULTIME — tout mélangé</button>' +
+      '<button data-inf="letters">Lettres</button>' +
+      '<button data-inf="forms">Formes</button>' +
+      '<button data-inf="reading">Syllabes &amp; lecture</button>' +
+      '<button data-inf="words">Mots du Coran</button>' +
+      '<button data-inf="ultimate" class="ultimate">ULTIME — tout mélangé</button>' +
       '</div>';
     inf.querySelectorAll("[data-inf]").forEach(b => b.onclick = () => Game.startInfinite(b.dataset.inf));
+    const gp = inf.querySelector("#inf-go-premium");
+    if (gp) gp.onclick = () => Premium.openPaywall("");
     cont.appendChild(inf);
     let unlocked = true; // la 1re leçon est toujours ouverte ; ensuite chaîne linéaire
     let prevDone = true;
     Game.UNITS.forEach(unit => {
       const uDiv = document.createElement("div");
       uDiv.className = "unit";
-      uDiv.innerHTML = '<div class="unit-head" style="--c:' + unit.color + '"><span class="unit-icon">' + unit.icon + '</span><div><b>' + unit.title + '</b></div></div>';
+      uDiv.innerHTML = '<div class="unit-head" style="--c:' + unit.color + '"><span class="unit-icon">' + Icon(UNIT_ICONS[unit.key] || "book") + '</span><div><b>' + unit.title + '</b></div></div>';
       const lessonsDiv = document.createElement("div");
       lessonsDiv.className = "unit-lessons";
       unit.lessons.forEach(lesson => {
@@ -92,9 +101,9 @@ window.App = (function(){
         node.className = "lesson-node" + (isUnlocked ? "" : " locked") + (stars ? " done" : "");
         node.style.setProperty("--c", unit.color);
         node.innerHTML =
-          '<span class="node-circle">' + (isUnlocked ? (stars ? "⭐" : "▶") : "🔒") + '</span>' +
+          '<span class="node-circle">' + (isUnlocked ? (stars ? Icon("star") : Icon("play")) : Icon("lock")) + '</span>' +
           '<span class="node-label">' + lesson.title +
-          (stars ? '<small>' + "⭐".repeat(stars) + "☆".repeat(3 - stars) + '</small>' : "") + '</span>';
+          (stars ? '<small>' + Icon.stars(stars) + '</small>' : "") + '</span>';
         if (isUnlocked) node.onclick = () => Game.start(lesson.key);
         lessonsDiv.appendChild(node);
         prevDone = stars > 0;
@@ -112,9 +121,9 @@ window.App = (function(){
       const read = State.get().theoryRead[ch.key];
       const b = document.createElement("button");
       b.className = "theory-item" + (read ? " read" : "");
-      b.innerHTML = '<span class="th-icon">' + ch.icon + '</span>' +
-        '<span class="th-names"><b>' + (i + 1) + ". " + ch.title + '</b><small>' + ch.sub + '</small></span>' +
-        '<span class="th-check">' + (read ? "✅" : "›") + '</span>';
+      b.innerHTML = '<span class="th-icon">' + (i + 1) + '</span>' +
+        '<span class="th-names"><b>' + ch.title + '</b><small>' + ch.sub + '</small></span>' +
+        '<span class="th-check">' + (read ? Icon("check") : "›") + '</span>';
       b.onclick = () => openTheory(ch.key);
       cont.appendChild(b);
     });
@@ -124,10 +133,10 @@ window.App = (function(){
     return '<div class="letter-cards">' +
       LETTERS.map(l =>
         '<div class="letter-card">' +
-        '<div class="lc-letter ar" data-say="' + l.arName + '">' + l.ar + '<span class="lc-spk">🔊</span></div>' +
+        '<div class="lc-letter ar" data-say="' + l.arName + '">' + l.ar + '<span class="lc-spk">' + Icon("volume") + '</span></div>' +
         '<div class="lc-info">' +
         '<b>' + l.name + '</b> — ' + l.sound +
-        '<div class="lc-artic">🗣️ ' + l.artic + '</div>' +
+        '<div class="lc-artic">' + Icon("mic") + l.artic + '</div>' +
         '</div></div>').join("") +
       '</div>';
   }
@@ -158,7 +167,7 @@ window.App = (function(){
     const ch = THEORY.find(c => c.key === key);
     const idx = THEORY.indexOf(ch);
     show("screen-theory-chapter");
-    el("theory-title").innerHTML = ch.icon + " " + ch.title;
+    el("theory-title").textContent = ch.title;
     let html = ch.html
       .replace("{{ALPHABET_TABLE}}", alphabetTable())
       .replace("{{FORMS_TABLE}}", formsTable())
@@ -180,7 +189,7 @@ window.App = (function(){
     });
     const next = THEORY[idx + 1];
     el("theory-nav").innerHTML =
-      '<button class="btn big" id="btn-theory-done">✅ J\'ai compris !</button>' +
+      '<button class="btn big" id="btn-theory-done">' + Icon("check") + 'J\'ai compris !</button>' +
       (next ? '<button class="btn big alt" id="btn-theory-next">Chapitre suivant : ' + next.title + ' →</button>' : "");
     el("btn-theory-done").onclick = () => { State.markTheory(key); renderTheoryList(); show("screen-theory"); };
     const bn = el("btn-theory-next");
@@ -195,12 +204,24 @@ window.App = (function(){
     const readCount = Object.keys(s.theoryRead).length;
     el("profile-stats").innerHTML =
       '<div class="stat"><b>' + s.xp + '</b><span>XP total</span></div>' +
-      '<div class="stat"><b>🔥 ' + s.streak.count + '</b><span>jours de suite</span></div>' +
+      '<div class="stat"><b>' + Icon("flame") + s.streak.count + '</b><span>jours de suite</span></div>' +
       '<div class="stat"><b>' + doneCount + '/' + total + '</b><span>leçons</span></div>' +
       '<div class="stat"><b>' + readCount + '/' + THEORY.length + '</b><span>chapitres lus</span></div>';
     el("set-voice").value = s.voice;
     el("set-lang").value = s.lang;
     el("set-reciter").value = s.reciter;
+    const pb = el("premium-box");
+    if (pb) {
+      pb.innerHTML = Premium.isActive()
+        ? '<h3>' + Icon("crown") + 'Premium</h3><p class="acct-note">Merci pour ton soutien ! Entraînement infini illimité.</p>'
+        : '<h3>' + Icon("crown") + 'Premium</h3><p class="acct-note">Entraînement infini illimité, achat unique ' + (window.MONETIZATION||{}).priceLabel + ', sans abonnement ni publicité. Toutes les leçons, la théorie et le Coran restent gratuits.</p>' +
+          '<div class="acct-btns"><button class="btn small" id="btn-premium">Passer en illimité</button>' +
+          (Premium.isNative() ? '<button class="btn-link" id="btn-restore">Restaurer mes achats</button>' : '') + '</div>';
+      const b = el("btn-premium"); if (b) b.onclick = () => Premium.openPaywall("");
+      const r = el("btn-restore"); if (r) r.onclick = Premium.restore;
+    }
+    Cloud.render();
+    Premium.renderSupport();
   }
 
   function initSettings(){
@@ -214,7 +235,10 @@ window.App = (function(){
     el("set-lang").onchange = e => { State.set({ lang: e.target.value }); };
     el("set-reciter").onchange = e => State.set({ reciter: e.target.value });
     el("btn-reset").onclick = () => {
-      if (confirm("Tout effacer et recommencer à zéro ?")) { localStorage.removeItem("iqra-state"); location.reload(); }
+      if (confirm("Tout effacer et recommencer à zéro ?" + (Cloud.isLoggedIn() ? "\n(La progression en ligne sera effacée aussi.)" : ""))) {
+        localStorage.removeItem("iqra-state");
+        Cloud.resetRemote().finally(() => location.reload());
+      }
     };
   }
 
@@ -250,6 +274,9 @@ window.App = (function(){
     Game.init();
     Quran.init();
     initSettings();
+    Icon.mount();
+    Cloud.init();
+    Premium.init();
     // navigation basse
     el("nav-learn").onclick   = () => { renderHome(); show("screen-home"); };
     el("nav-quran").onclick   = () => { Quran.renderList(); show("screen-quran"); };
@@ -261,6 +288,11 @@ window.App = (function(){
     Quran.renderList();
     initOnboarding();
     show("screen-home");
+    // retour de paiement Stripe (web)
+    if (location.search.includes("premium=merci")) {
+      history.replaceState(null, "", location.pathname);
+      setTimeout(() => alert("Merci pour ton soutien !\nTon accès Premium sera activé sur ton compte très rapidement (vérifie que tu es bien connecté dans Profil)."), 500);
+    }
     // PWA : service worker (désactivé en local pour ne pas gêner le développement)
     const isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     if ("serviceWorker" in navigator && !isLocal) {

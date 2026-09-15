@@ -7,6 +7,8 @@ Rien n'est jamais perdu : tu peux revenir à n'importe quelle version en quelque
 
 | Dossier | Contenu | Date |
 |---|---|---|
+| `v7-avant-arabe-parfait/` | v7 (logo, icônes vectorielles, comptes, Premium, projet mobile) — juste avant le changement de police arabe et la relecture orthographique | 15 sept. 2026 |
+| `v6-avant-comptes-et-stores/` | Version « Iqra Academy » v6 (nouveau design, 22 chapitres) — juste avant l'ajout du logo, des comptes, du Premium et du projet mobile | 15 sept. 2026 |
 | `v5-avant-iqra-academy/` | Version « Iqra' » (design Duolingo vert/blanc, théorie 18 chapitres) — telle qu'elle était juste avant le passage au design Iqra Academy | 13 sept. 2026 |
 
 Chaque dossier contient aussi un `.zip` de la même version, pratique à télécharger d'un coup.

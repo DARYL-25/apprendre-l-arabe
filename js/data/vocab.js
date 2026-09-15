@@ -5,8 +5,8 @@
 // ============================================================
 window.VOCAB = [
 { key:"g1", title:"Al-Fâtiha (1/2)", icon:"🕌", words:[
-  { ar:"اسْم",        ph:"ism",        fr:"nom",                  en:"name",             tr:"isim",                id:"nama",                ur:"نام" },
-  { ar:"اللّٰه",       ph:"Allâh",      fr:"Allah, Dieu",          en:"Allah, God",       tr:"Allah",               id:"Allah",               ur:"اللہ", f:1 },
+  { ar:"اِسْم",        ph:"ism",        fr:"nom",                  en:"name",             tr:"isim",                id:"nama",                ur:"نام" },
+  { ar:"اللَّٰه",       ph:"Allâh",      fr:"Allah, Dieu",          en:"Allah, God",       tr:"Allah",               id:"Allah",               ur:"اللہ", f:1 },
   { ar:"رَحْمَٰن",     ph:"rahmân",     fr:"Tout Miséricordieux",  en:"Most Merciful",    tr:"Rahmân",              id:"Maha Pengasih",       ur:"رحمٰن" },
   { ar:"رَحِيم",      ph:"rahîm",      fr:"Très Miséricordieux",  en:"Most Compassionate", tr:"çok merhametli",    id:"Maha Penyayang",      ur:"رحیم" },
   { ar:"حَمْد",       ph:"hamd",       fr:"louange",              en:"praise",           tr:"hamd, övgü",          id:"pujian",              ur:"حمد" },
@@ -20,7 +20,7 @@ window.VOCAB = [
   { ar:"إِيَّاكَ",     ph:"iyyâka",     fr:"Toi seul",             en:"You alone",        tr:"yalnız Sana",         id:"hanya kepada-Mu",     ur:"صرف تجھی کو" },
   { ar:"نَعْبُدُ",     ph:"na'boudou",  fr:"nous adorons",         en:"we worship",       tr:"ibadet ederiz",       id:"kami menyembah",      ur:"ہم عبادت کرتے ہیں" },
   { ar:"نَسْتَعِين",  ph:"nasta'în",   fr:"nous implorons l'aide", en:"we seek help",    tr:"yardım dileriz",      id:"kami memohon pertolongan", ur:"ہم مدد مانگتے ہیں" },
-  { ar:"اهْدِنَا",    ph:"ihdinâ",     fr:"guide-nous",           en:"guide us",         tr:"bizi doğru yola ilet", id:"tunjukilah kami",    ur:"ہمیں ہدایت دے" },
+  { ar:"اِهْدِنَا",    ph:"ihdinâ",     fr:"guide-nous",           en:"guide us",         tr:"bizi doğru yola ilet", id:"tunjukilah kami",    ur:"ہمیں ہدایت دے" },
   { ar:"صِرَاط",      ph:"sirât",      fr:"chemin, voie",         en:"path",             tr:"sırat, yol",          id:"jalan",               ur:"راستہ" },
   { ar:"مُسْتَقِيم",  ph:"moustaqîm",  fr:"droit",                en:"straight",         tr:"dosdoğru",            id:"lurus",               ur:"سیدھا" },
   { ar:"نِعْمَة",     ph:"ni'ma",      fr:"bienfait",             en:"blessing",         tr:"nimet",               id:"nikmat",              ur:"نعمت" },
@@ -79,9 +79,9 @@ window.VOCAB = [
 { key:"g7", title:"L'être humain", icon:"👨‍👩‍👧‍👦", words:[
   { ar:"إِنْسَان",    ph:"insân",      fr:"être humain",          en:"human being",      tr:"insan",               id:"manusia",             ur:"انسان" },
   { ar:"رَجُل",       ph:"rajoul",     fr:"homme",                en:"man",              tr:"adam, erkek",         id:"laki-laki",           ur:"مرد" },
-  { ar:"امْرَأَة",    ph:"imra'a",     fr:"femme",                en:"woman",            tr:"kadın",               id:"perempuan",           ur:"عورت" },
+  { ar:"اِمْرَأَة",    ph:"imra'a",     fr:"femme",                en:"woman",            tr:"kadın",               id:"perempuan",           ur:"عورت" },
   { ar:"وَلَد",       ph:"walad",      fr:"enfant, garçon",       en:"child, boy",       tr:"çocuk",               id:"anak",                ur:"لڑکا" },
-  { ar:"ابْن",        ph:"ibn",        fr:"fils",                 en:"son",              tr:"oğul",                id:"putra",               ur:"بیٹا" },
+  { ar:"اِبْن",        ph:"ibn",        fr:"fils",                 en:"son",              tr:"oğul",                id:"putra",               ur:"بیٹا" },
   { ar:"بِنْت",       ph:"bint",       fr:"fille",                en:"daughter",         tr:"kız",                 id:"putri",               ur:"بیٹی" },
   { ar:"أَب",         ph:"ab",         fr:"père",                 en:"father",           tr:"baba",                id:"ayah",                ur:"باپ" },
   { ar:"أُمّ",        ph:"oumm",       fr:"mère",                 en:"mother",           tr:"anne",                id:"ibu",                 ur:"ماں" },
@@ -271,7 +271,7 @@ window.VOCAB = [
 { key:"g23", title:"Verbes (3/3)", icon:"🙏", words:[
   { ar:"أَنْزَلَ",    ph:"anzala",     fr:"Il a fait descendre",  en:"He sent down",     tr:"indirdi",             id:"Dia menurunkan",      ur:"نازل کیا" },
   { ar:"أَرْسَلَ",    ph:"arsala",     fr:"Il a envoyé",          en:"He sent",          tr:"gönderdi",            id:"Dia mengutus",        ur:"بھیجا" },
-  { ar:"اتَّبَعَ",    ph:"ittaba'a",   fr:"il a suivi",           en:"he followed",      tr:"tâbi oldu",           id:"dia mengikuti",       ur:"پیروی کی" },
+  { ar:"اِتَّبَعَ",    ph:"ittaba'a",   fr:"il a suivi",           en:"he followed",      tr:"tâbi oldu",           id:"dia mengikuti",       ur:"پیروی کی" },
   { ar:"عَبَدَ",      ph:"'abada",     fr:"il a adoré",           en:"he worshipped",    tr:"ibadet etti",         id:"dia menyembah",       ur:"عبادت کی" },
   { ar:"سَجَدَ",      ph:"sajada",     fr:"il s'est prosterné",   en:"he prostrated",    tr:"secde etti",          id:"dia bersujud",        ur:"سجدہ کیا" },
   { ar:"دَعَا",       ph:"da'â",       fr:"il a invoqué",         en:"he called upon",   tr:"dua etti",            id:"dia berdoa",          ur:"پکارا" },
@@ -341,7 +341,7 @@ window.VOCAB = [
   { ar:"أَبَدًا",     ph:"abadan",     fr:"à jamais",             en:"forever",          tr:"ebediyen",            id:"selamanya",           ur:"ہمیشہ" }
 ]},
 { key:"g29", title:"Les nombres", icon:"🔢", words:[
-  { ar:"اثْنَانِ",    ph:"ithnân",     fr:"deux",                 en:"two",              tr:"iki",                 id:"dua",                 ur:"دو" },
+  { ar:"اِثْنَانِ",    ph:"ithnân",     fr:"deux",                 en:"two",              tr:"iki",                 id:"dua",                 ur:"دو" },
   { ar:"ثَلَاثَة",    ph:"thalâtha",   fr:"trois",                en:"three",            tr:"üç",                  id:"tiga",                ur:"تین" },
   { ar:"أَرْبَعَة",   ph:"arba'a",     fr:"quatre",               en:"four",             tr:"dört",                id:"empat",               ur:"چار" },
   { ar:"خَمْسَة",     ph:"khamsa",     fr:"cinq",                 en:"five",             tr:"beş",                 id:"lima",                ur:"پانچ" },

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iqra Academy — Apprendre à lire l'arabe et le Coran</title>
+<meta name="description" content="Apprends l'alphabet arabe, la lecture et le vocabulaire du Coran en t'amusant — niveaux progressifs, théorie complète, Coran avec récitateurs célèbres.">
+<meta name="theme-color" content="#0a2e22">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Iqra Academy">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800&family=Fredoka+One&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=7">
+</head>
+<body>
+
+<!-- ============ Onboarding ============ -->
+<div id="onboarding">
+  <svg class="ob-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+  <div class="ob-step active">
+    <img class="ob-logo-img" src="icons/logo-256.png" alt="Iqra Academy" width="140" height="140">
+    <h1>Iqra Academy</h1>
+    <p>Apprends à <b>lire l'arabe</b> et à comprendre le <b>Coran</b>, pas à pas, en t'amusant.</p>
+    <div class="ob-features">
+      <span><i data-icon="gamepad"></i>Des niveaux comme un jeu</span>
+      <span><i data-icon="bookopen"></i>Les 114 sourates + récitateurs</span>
+      <span><i data-icon="layers"></i>Toute la théorie, de zéro au tajwid</span>
+      <span><i data-icon="volume"></i>Prononciation audio</span>
+    </div>
+    <button class="btn big" data-next>C'EST PARTI !</button>
+  </div>
+  <div class="ob-step">
+    <h1>Choisis ta voix</h1>
+    <p>Pour la prononciation des lettres et des mots :</p>
+    <div class="ob-choices">
+      <button class="ob-card" data-voice="m"><span class="ob-emoji"><i data-icon="mic"></i></span><b>Voix masculine</b></button>
+      <button class="ob-card" data-voice="f"><span class="ob-emoji"><i data-icon="mic"></i></span><b>Voix féminine</b></button>
+    </div>
+    <p class="ob-note">La voix dépend de celles installées sur ton appareil.<br>Tu pourras changer à tout moment dans Profil.</p>
+  </div>
+  <div class="ob-step">
+    <h1>Langue de traduction</h1>
+    <p>Dans quelle langue veux-tu traduire les mots et les versets ?</p>
+    <div class="ob-choices langs">
+      <button class="ob-card" data-lang="fr"><span class="ob-emoji">🇫🇷</span><b>Français</b></button>
+      <button class="ob-card" data-lang="en"><span class="ob-emoji">🇬🇧</span><b>English</b></button>
+      <button class="ob-card" data-lang="tr"><span class="ob-emoji">🇹🇷</span><b>Türkçe</b></button>
+      <button class="ob-card" data-lang="id"><span class="ob-emoji">🇮🇩</span><b>Indonesia</b></button>
+      <button class="ob-card" data-lang="ur"><span class="ob-emoji">🇵🇰</span><b>اردو</b></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Accueil : le parcours ============ -->
+<section class="screen active" id="screen-home">
+  <header class="topbar">
+    <span class="logo"><img src="icons/logo-256.png" alt="" class="logo-img">Iqra Academy</span>
+    <span class="top-stats"><span id="home-streak"><i data-icon="flame"></i>0</span><span id="home-xp">0 XP</span></span>
+  </header>
+  <div id="path"></div>
+</section>
+
+<!-- ============ Coran : liste ============ -->
+<section class="screen" id="screen-quran">
+  <header class="topbar"><span class="logo"><i data-icon="bookopen"></i>Le Coran</span></header>
+  <div class="search-wrap"><input id="surah-search" type="search" placeholder="Chercher une sourate (nom ou numéro)…"></div>
+  <div id="surah-list"></div>
+</section>
+
+<!-- ============ Coran : lecture d'une sourate ============ -->
+<section class="screen" id="screen-surah">
+  <header class="topbar">
+    <button class="btn-icon" id="btn-back-quran"><i data-icon="back"></i></button>
+    <button class="btn small" id="btn-play-all"><i data-icon="play"></i>Tout écouter</button>
+  </header>
+  <h2 id="surah-title" class="surah-title"></h2>
+  <div id="ayah-list"></div>
+</section>
+
+<!-- ============ Théorie : liste des chapitres ============ -->
+<section class="screen" id="screen-theory">
+  <header class="topbar"><span class="logo"><i data-icon="layers"></i>Théorie</span></header>
+  <p class="theory-intro">22 chapitres exhaustifs : tout ce qu'il faut savoir pour lire parfaitement l'arabe et le Coran, du niveau zéro jusqu'au tajwid. Avance chapitre par chapitre !</p>
+  <div id="theory-list"></div>
+</section>
+
+<!-- ============ Théorie : un chapitre ============ -->
+<section class="screen" id="screen-theory-chapter">
+  <header class="topbar">
+    <button class="btn-icon" id="btn-back-theory"><i data-icon="back"></i></button>
+    <span class="logo" id="theory-title"></span>
+  </header>
+  <article id="theory-body" class="theory-body"></article>
+  <div id="theory-nav" class="theory-nav"></div>
+</section>
+
+<!-- ============ Profil et réglages ============ -->
+<section class="screen" id="screen-profile">
+  <header class="topbar"><span class="logo"><i data-icon="user"></i>Profil</span></header>
+  <div id="profile-stats" class="profile-stats"></div>
+  <div class="settings">
+    <h3><i data-icon="settings"></i>Réglages</h3>
+    <label>Voix de prononciation
+      <select id="set-voice">
+        <option value="m">Masculine</option>
+        <option value="f">Féminine</option>
+      </select>
+    </label>
+    <label>Langue de traduction
+      <select id="set-lang">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="tr">🇹🇷 Türkçe</option>
+        <option value="id">🇮🇩 Indonesia</option>
+        <option value="ur">🇵🇰 اردو</option>
+      </select>
+    </label>
+    <label>Récitateur du Coran
+      <select id="set-reciter"></select>
+    </label>
+    <button class="btn small danger" id="btn-reset"><i data-icon="trash"></i>Réinitialiser ma progression</button>
+  </div>
+  <div class="settings" id="account-box"></div>
+  <div class="settings" id="premium-box"></div>
+  <div class="settings" id="support-box"></div>
+  <div class="about">
+    <p><b>Iqra Academy (اقرأ)</b> — « Lis ! », le premier mot du Coran révélé.</p>
+    <p>Texte coranique et traductions : api.alquran.cloud · Récitations : cdn.islamic.network.</p>
+    <p>Ajoute l'app à ton écran d'accueil : dans Safari, <b>Partager → Sur l'écran d'accueil</b>.</p>
+    <p><a href="confidentialite.html" target="_blank" rel="noopener">Politique de confidentialité</a></p>
+  </div>
+</section>
+
+<!-- ============ Leçon en cours ============ -->
+<section class="screen" id="screen-lesson">
+  <header class="lesson-header">
+    <button class="btn-icon" id="btn-quit-lesson"><i data-icon="x"></i></button>
+    <div class="lesson-progress"><div id="lesson-progress-fill"></div></div>
+    <span id="lesson-hearts"></span>
+  </header>
+  <div id="lesson-body"></div>
+  <footer id="lesson-footer">
+    <div id="lesson-feedback"></div>
+    <button class="btn big" id="btn-check" disabled>VÉRIFIER</button>
+  </footer>
+</section>
+
+<!-- ============ Premium (paywall) ============ -->
+<div id="paywall">
+  <div class="pw-card">
+    <button class="btn-icon pw-x" id="pw-close"><i data-icon="x"></i></button>
+    <div class="pw-emoji"><i data-icon="infinity"></i></div>
+    <h2>Entraînement infini illimité</h2>
+    <p id="pw-reason" class="pw-reason"></p>
+    <ul class="pw-list">
+      <li><i data-icon="check"></i>Questions illimitées, tous les jours</li>
+      <li><i data-icon="check"></i>Les 5 paquets : lettres, formes, lecture, mots, ULTIME</li>
+      <li><i data-icon="check"></i>Achat unique — pas d'abonnement</li>
+      <li><i data-icon="check"></i>Aucune publicité, jamais</li>
+      <li><i data-icon="heart"></i>Tu soutiens le développement de l'app</li>
+    </ul>
+    <button class="btn big" id="pw-buy">Débloquer — <span id="pw-price">4,99 €</span></button>
+    <button class="btn-link" id="pw-restore">Restaurer mes achats</button>
+    <p class="acct-note" id="pw-webnote">Sur le web, l'accès Premium est activé sur ton compte après paiement.</p>
+    <p class="acct-note">Les leçons, la théorie et le Coran restent 100 % gratuits.</p>
+  </div>
+</div>
+
+<!-- ============ Navigation basse ============ -->
+<nav id="bottom-nav">
+  <button class="nav-btn active" id="nav-learn"><i data-icon="home"></i>Apprendre</button>
+  <button class="nav-btn" id="nav-quran"><i data-icon="bookopen"></i>Coran</button>
+  <button class="nav-btn" id="nav-theory"><i data-icon="layers"></i>Théorie</button>
+  <button class="nav-btn" id="nav-profile"><i data-icon="user"></i>Profil</button>
+</nav>
+
+<!-- Firebase (comptes + sauvegarde en ligne) — inactif tant que js/firebase-config.js n'est pas rempli -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=7"></script>
+<script src="js/icons.js?v=7"></script>
+<script src="js/data/letters.js?v=7"></script>
+<script src="js/data/vocab.js?v=7"></script>
+<script src="js/data/pdfcourse.js?v=7"></script>
+<script src="js/data/surahs.js?v=7"></script>
+<script src="js/data/theory.js?v=7"></script>
+<script src="js/audio.js?v=7"></script>
+<script src="js/quran.js?v=7"></script>
+<script src="js/exercises.js?v=7"></script>
+<script src="js/cloud.js?v=7"></script>
+<script src="js/premium.js?v=7"></script>
+<script src="js/app.js?v=7"></script>
+</body>
+</html>

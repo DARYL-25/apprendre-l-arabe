@@ -1,6 +1,6 @@
 /* ============================================================
    Iqra Academy — Design : nuit émeraude & or, cartoon élégant
-   Polices : Fredoka One (titres) · Baloo 2 (texte) · Amiri (arabe)
+   Polices : Fredoka One (titres) · Baloo 2 (texte) · Noto Naskh Arabic (arabe) — hébergées dans /fonts
    ============================================================ */
 :root {
   --bg-1: #0a2e22;  --bg-2: #1a5c40;  --bg-3: #0d3b2e;
@@ -20,8 +20,23 @@ html, body { margin: 0; padding: 0; min-height: 100vh;
 button { font-family: inherit; cursor: pointer; }
 b { color: #fff; }
 
-.ar { font-family: "Amiri", "Scheherazade New", "Traditional Arabic", serif;
-  direction: rtl; unicode-bidi: isolate; color: var(--gold); }
+/* ---------- Polices hébergées dans l'app (rendu identique partout, hors-ligne compris) ---------- */
+@font-face { font-family: "Noto Naskh Arabic"; font-weight: 400; font-display: swap; src: url("../fonts/noto-naskh-arabic-arabic-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Noto Naskh Arabic"; font-weight: 500; font-display: swap; src: url("../fonts/noto-naskh-arabic-arabic-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Noto Naskh Arabic"; font-weight: 600; font-display: swap; src: url("../fonts/noto-naskh-arabic-arabic-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Noto Naskh Arabic"; font-weight: 700; font-display: swap; src: url("../fonts/noto-naskh-arabic-arabic-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Baloo 2"; font-weight: 400; font-display: swap; src: url("../fonts/baloo-2-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Baloo 2"; font-weight: 700; font-display: swap; src: url("../fonts/baloo-2-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Baloo 2"; font-weight: 800; font-display: swap; src: url("../fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fredoka One"; font-weight: 400; font-display: swap; src: url("../fonts/fredoka-one-latin-400-normal.woff2") format("woff2"); }
+
+/* Texte arabe : Noto Naskh Arabic — voyelles nettes, aucune ligature empilée, lettres bien espacées.
+   line-height généreux pour que les signes au-dessus/en-dessous ne soient jamais coupés. */
+.ar { font-family: "Noto Naskh Arabic", "Geeza Pro", "Noto Sans Arabic", "Segoe UI", sans-serif;
+  font-weight: 500; direction: rtl; unicode-bidi: isolate; color: var(--gold);
+  line-height: 1.9; letter-spacing: 0 !important; font-synthesis: none; -webkit-font-smoothing: antialiased;
+  font-feature-settings: "calt" 1, "rlig" 1; }
+.ar b, .ar strong, b.ar, strong.ar { font-weight: 700; }
 .ar.big { font-size: 1.8em; }
 
 /* ---------- écrans ---------- */
@@ -36,6 +51,10 @@ b { color: #fff; }
 .logo { font-family: "Fredoka One", cursive; font-weight: 400; font-size: 22px; color: var(--gold);
   text-shadow: 0 3px 0 var(--gold-dk); letter-spacing: .5px; }
 .logo-ar { color: var(--gold); font-size: 26px; text-shadow: none; }
+.logo { display: inline-flex; align-items: center; gap: 8px; }
+.logo-img { width: 34px; height: 34px; filter: drop-shadow(0 2px 6px rgba(0,0,0,.4)); }
+.ob-logo-img { display: block; width: 140px; height: 140px; margin: 0 auto 14px; border-radius: 50%;
+  filter: drop-shadow(0 0 30px rgba(249,200,70,.45)); animation: glow 3s ease-in-out infinite; }
 .top-stats { display: flex; gap: 10px; font-weight: 800; font-size: 14px; }
 .top-stats span { background: rgba(249,200,70,.12); border: 1.5px solid var(--line-gold);
   border-radius: 100px; padding: 4px 12px; color: var(--gold); }
@@ -72,8 +91,8 @@ b { color: #fff; }
     radial-gradient(2px 2px at 40% 8%, rgba(249,200,70,.6) 50%, transparent 52%),
     radial-gradient(3px 3px at 20% 45%, rgba(249,200,70,.5) 50%, transparent 52%),
     linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-1) 100%); }
-#onboarding::before { content: "🌙"; position: absolute; top: 28px; right: 28px; font-size: 52px;
-  animation: floatY 4s ease-in-out infinite; }
+.ob-moon { position: absolute; top: 28px; right: 28px; width: 56px; height: 56px; color: var(--gold);
+  filter: drop-shadow(0 0 14px rgba(249,200,70,.6)); animation: floatY 4s ease-in-out infinite; }
 @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 .ob-step { display: none; max-width: 420px; width: 100%; }
 .ob-step.active { display: block; animation: pop .35s ease; }
@@ -120,7 +139,7 @@ b { color: #fff; }
   background: var(--glass); border: 2px solid var(--line); position: relative; overflow: hidden; }
 .unit-head::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--c, var(--gold)); }
 .unit-head b { font-family: "Fredoka One", cursive; font-weight: 400; letter-spacing: .3px; }
-.unit-icon { font-size: 26px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+.unit-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: var(--c, var(--gold));
   border-radius: 12px; background: rgba(255,255,255,.08); }
 .unit-lessons { display: flex; flex-direction: column; gap: 8px; padding: 12px 6px 0; }
 .lesson-node { display: flex; align-items: center; gap: 14px; border: 2px solid var(--line);
@@ -141,7 +160,8 @@ b { color: #fff; }
   backdrop-filter: blur(10px); padding-bottom: env(safe-area-inset-bottom); }
 .nav-btn { flex: 1; background: none; border: none; padding: 8px 0 6px; font-size: 11px; font-weight: 800;
   color: var(--ink-3); display: flex; flex-direction: column; align-items: center; gap: 2px; transition: color .15s; }
-.nav-btn span { font-size: 24px; filter: grayscale(.4); opacity: .8; transition: all .15s; }
+.nav-btn .ico { width: 24px; height: 24px; opacity: .75; transition: all .15s; }
+.nav-btn.active .ico { opacity: 1; }
 .nav-btn.active { color: var(--gold); }
 .nav-btn.active span { filter: none; opacity: 1; transform: translateY(-2px); }
 
@@ -158,7 +178,7 @@ b { color: #fff; }
 #lesson-hearts { font-size: 14px; letter-spacing: 1px; }
 .ex-title { font-family: "Fredoka One", cursive; font-weight: 400; font-size: 20px; margin: 18px 0 6px; color: var(--gold); }
 .ex-title small { color: var(--ink-3); font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; }
-.ex-prompt { font-size: 64px; text-align: center; margin: 14px auto 8px; line-height: 1.5; cursor: pointer;
+.ex-prompt { font-size: 64px; text-align: center; margin: 14px auto 8px; line-height: 1.7; padding: 6px 0; cursor: pointer;
   background: linear-gradient(135deg, rgba(249,200,70,.12), rgba(249,200,70,.04)); border: 3px solid var(--line-gold);
   border-radius: 24px; padding: 14px 20px; max-width: 460px; }
 .ex-prompt .spk { font-size: 22px; vertical-align: middle; }
@@ -170,7 +190,7 @@ b { color: #fff; }
 .ex-opt { border: 2.5px solid var(--line); background: var(--glass); border-radius: 16px; padding: 15px 10px;
   font-size: 17px; font-weight: 800; color: #fff; transition: all .12s; box-shadow: 0 4px 0 rgba(0,0,0,.3); position: relative; top: 0; }
 .ex-opt:hover { border-color: var(--gold); background: rgba(249,200,70,.08); top: -2px; box-shadow: 0 6px 0 rgba(0,0,0,.3); }
-.ex-opt.ar { font-size: 30px; }
+.ex-opt.ar { font-size: 30px; line-height: 1.8; padding: 8px 10px; }
 .ex-opt.sel { border-color: var(--gold); background: rgba(249,200,70,.18); color: var(--gold); }
 .ex-opt.good { border-color: var(--green) !important; background: rgba(16,185,129,.2) !important; color: #6ee7b7; animation: popok .3s; }
 .ex-opt.bad { border-color: var(--red) !important; background: rgba(244,63,94,.15) !important; color: #fda4af; animation: shake .35s; }
@@ -199,9 +219,11 @@ b { color: #fff; }
 .fb-ans .ar { font-size: 24px; color: #fff; }
 
 .lesson-end { text-align: center; padding: 50px 10px; }
-.end-emoji { font-size: 84px; animation: starpop .5s ease; }
+.end-emoji { animation: starpop .5s ease; color: var(--gold); }
+.end-emoji .ico { width: 84px; height: 84px; }
 @keyframes starpop { 0% { transform: scale(0) rotate(-15deg); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
-.end-stars { font-size: 44px; margin: 10px 0; letter-spacing: 6px; }
+.end-stars { margin: 10px 0; }
+.end-stars .ico { width: 44px; height: 44px; margin: 0 3px; }
 .end-xp { display: inline-block; background: var(--glass); border: 2px solid var(--line-gold); color: var(--gold);
   font-family: "Fredoka One", cursive; border-radius: 16px; padding: 10px 24px; font-size: 26px; }
 .end-perfect { margin-top: 12px; color: #6ee7b7; font-weight: 800; }
@@ -246,7 +268,7 @@ b { color: #fff; }
   background: var(--glass); border-radius: 14px; padding: 12px 14px; text-align: left; color: #fff; transition: all .15s; }
 .theory-item:hover { border-color: var(--line-gold); background: rgba(249,200,70,.08); transform: translateX(3px); }
 .theory-item.read { border-color: rgba(16,185,129,.4); background: rgba(16,185,129,.08); }
-.th-icon { font-size: 24px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+.th-icon { font-family: "Fredoka One", cursive; font-size: 18px; color: var(--gold); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
   border-radius: 12px; background: rgba(255,255,255,.08); }
 .th-names { flex: 1; display: flex; flex-direction: column; }
 .th-names small { color: var(--ink-3); }
@@ -263,7 +285,7 @@ b { color: #fff; }
 .th-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 14px 0; border-radius: 12px; border: 1.5px solid var(--line); }
 .th-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
 .th-table th { background: rgba(249,200,70,.14); color: var(--gold); text-align: left; font-size: 12.5px; text-transform: uppercase; letter-spacing: .5px; }
-.th-table th, .th-table td { border: 1px solid var(--line); padding: 8px 10px; color: var(--ink-2); vertical-align: top; }
+.th-table th, .th-table td { border: 1px solid var(--line); padding: 8px 7px; color: var(--ink-2); vertical-align: top; }
 .th-table td b { color: #fff; }
 .th-table tr:nth-child(even) td { background: rgba(255,255,255,.025); }
 .th-table td.ar { text-align: center; white-space: nowrap; color: var(--gold); }
@@ -306,3 +328,64 @@ b { color: #fff; }
   .ex-options { grid-template-columns: 1fr 1fr 1fr 1fr; }
   .ex-options:has(.ar) { grid-template-columns: 1fr 1fr; }
 }
+
+/* ---------- compte, premium, soutien ---------- */
+.settings input { width: 100%; box-sizing: border-box; margin: 8px 0; padding: 12px 14px; border-radius: 12px;
+  border: 1.5px solid var(--line); background: rgba(255,255,255,.08); color: #fff; font-size: 16px; }
+.settings input::placeholder { color: var(--ink-3); }
+.acct-note { font-size: 14px; color: var(--ink-2); margin: 6px 0; }
+.acct-mail { margin: 6px 0; }
+.acct-btns { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+.btn-link { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer;
+  font-size: 14px; font-weight: 700; padding: 4px 0; font-family: inherit; }
+.inf-quota { margin: 0 0 12px !important; font-size: 13px !important; color: #e9d5ff !important; }
+.inf-limit { color: var(--gold); font-weight: 700; margin: 14px 0 8px; }
+#paywall { position: fixed; inset: 0; z-index: 200; background: rgba(4,20,14,.82); display: none;
+  align-items: center; justify-content: center; padding: 20px; }
+#paywall.open { display: flex; }
+.pw-card { position: relative; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 2px solid rgba(249,200,70,.5);
+  border-radius: 24px; padding: 28px 22px 20px; max-width: 420px; width: 100%; text-align: center; color: #fff;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5); animation: pop .3s ease; }
+.pw-x { position: absolute; top: 10px; right: 10px; }
+.pw-emoji { font-size: 48px; }
+.pw-card h2 { font-family: "Fredoka One", cursive; font-weight: 400; color: var(--gold); margin: 6px 0; }
+.pw-reason { color: var(--gold); font-weight: 700; min-height: 1em; }
+.pw-list { list-style: none; padding: 0; margin: 14px 0 18px; text-align: left; }
+.pw-list li { padding: 6px 0; border-bottom: 1px solid var(--line); font-weight: 700; font-size: 15px; }
+.pw-card .btn.big { width: 100%; margin-bottom: 8px; }
+
+/* ---------- icônes vectorielles ---------- */
+.ico { width: 1.15em; height: 1.15em; vertical-align: -0.2em; flex: none; }
+.logo .ico, h3 .ico { width: 24px; height: 24px; margin-right: 6px; vertical-align: -5px; }
+h3 { display: flex; align-items: center; gap: 6px; }
+h3 .ico { margin: 0; }
+.btn .ico, .btn-link .ico, .build-undo .ico { margin-right: 6px; }
+.btn-icon .ico { width: 22px; height: 22px; vertical-align: middle; }
+.top-stats span { display: inline-flex; align-items: center; gap: 4px; }
+.top-stats .ico { width: 16px; height: 16px; color: #fb923c; }
+.ob-features span { display: flex; align-items: center; gap: 10px; text-align: left; }
+.ob-features .ico { width: 22px; height: 22px; color: var(--gold); }
+.ob-emoji .ico { width: 30px; height: 30px; }
+.node-circle .ico { width: 22px; height: 22px; }
+.node-label .stars .ico { width: 13px; height: 13px; margin-right: 2px; }
+.stars .ico.on { color: var(--gold); } .stars .ico.staro { color: rgba(249,200,70,.45); }
+.th-check .ico { color: var(--green); width: 22px; height: 22px; }
+.lc-spk .ico { width: 16px; height: 16px; }
+.lc-artic .ico { width: 14px; height: 14px; margin-right: 4px; }
+.ex-bigplay .ico { width: 42px; height: 42px; vertical-align: middle; }
+.ex-prompt .spk .ico { width: 24px; height: 24px; color: var(--gold); }
+#lesson-hearts { display: inline-flex; align-items: center; gap: 3px; }
+#lesson-hearts .ico { width: 22px; height: 22px; }
+#lesson-hearts .heart.on { color: #ef4444; } #lesson-hearts .heart:not(.on) { color: rgba(255,255,255,.3); }
+.stat b { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.stat b .ico { width: 22px; height: 22px; color: #fb923c; }
+#lesson-feedback b { display: inline-flex; align-items: center; gap: 6px; }
+.infinity-card > b { display: flex; align-items: center; gap: 8px; }
+.infinity-card > b .ico { width: 24px; height: 24px; }
+.inf-quota { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.inf-quota .ico { width: 16px; height: 16px; color: var(--gold); }
+.pw-emoji { color: var(--gold); } .pw-emoji .ico { width: 56px; height: 56px; }
+.pw-list li { display: flex; align-items: center; gap: 10px; }
+.pw-list .ico { width: 20px; height: 20px; color: var(--green); }
+.pw-list li:last-child .ico { color: #f472b6; }
+.loading .ico { width: 22px; height: 22px; color: var(--gold); }

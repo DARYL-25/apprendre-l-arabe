@@ -83,7 +83,7 @@ window.LETTERS = [
     ex:{ ar:"نُور",   ph:"noûr",   fr:"lumière" } },
   { ar:"ه", name:"hâ (doux)", ph:"h", arName:"هَاء", joins:true, sound:"« h » doux expiré, comme dans « aha ! »",
     artic:"Vient du plus PROFOND de la gorge (la glotte) : un simple souffle doux, comme le h de « aha ! » ou un soupir. Beaucoup plus léger que le ح — aucune friction.",
-    ex:{ ar:"هُدَى",  ph:"houdâ",  fr:"guidée" } },
+    ex:{ ar:"هُدًى",  ph:"houdâ",  fr:"guidée" } },
   { ar:"و", name:"wâw",   ph:"w",  arName:"وَاو",   joins:false, sound:"« w » comme dans « oui »",
     artic:"Arrondis les lèvres et projette-les en avant comme pour dire « ou », puis relâche : c'est le « w » de « oui » ou « watt ».",
     ex:{ ar:"وَرْد",  ph:"ward",   fr:"rose" } },

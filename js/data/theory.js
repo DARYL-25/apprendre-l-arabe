@@ -79,7 +79,7 @@ html:`
 <tr><td class="ar" data-say="عَ">عَ — ʿa</td><td class="ar" data-say="غَ">غَ — gha</td><td class="ar" data-say="عَلِيم غَنِيّ">عَلِيم / غَنِيّ</td></tr>
 </table>
 <div class="th-warn">⚠️ Confondre une fine et une grosse est une <b>erreur qui change le sens</b> : كَلْب (chien) ≠ قَلْب (cœur). C'est l'une des erreurs les plus fréquentes des francophones.</div>
-<h3>Les 6 lettres de la gorge (حُرُوف الحَلْق)</h3>
+<h3>Les 6 lettres de la gorge (حُرُوف الْحَلْق)</h3>
 <p>Six lettres sortent de la gorge, à trois hauteurs différentes. Elles n'existent pas en français et demandent de l'entraînement :</p>
 <table class="th-table"><tr><th>Étage</th><th>Lettres</th><th>Comment faire</th></tr>
 <tr><td><b>Fond</b> de la gorge</td><td class="ar" data-say="ءَ هَ">ء ه</td><td><b>ء</b> = coup de glotte, l'arrêt entre « uh » et « oh » dans « uh-oh ». <b>ه</b> = souffle doux, comme un soupir (« h » de <i>home</i>).</td></tr>
@@ -133,7 +133,7 @@ html:`
 </table>
 <h3>Ligatures et formes spéciales</h3>
 <ul>
-<li><b>Lâm-alif</b> <span class="ar big" data-say="لَا">لا</span> : quand ل est suivi de ا, on écrit obligatoirement la ligature لا (jamais لـا). Ex. <span class="ar" data-say="لَا إِلَهَ إِلَّا اللهُ">لَا إِلَهَ إِلَّا اللهُ</span>.</li>
+<li><b>Lâm-alif</b> <span class="ar big" data-say="لَا">لا</span> : quand ل est suivi de ا, on écrit obligatoirement la ligature لا (jamais لـا). Ex. <span class="ar" data-say="لَا إِلَٰهَ إِلَّا اللَّهُ">لَا إِلَٰهَ إِلَّا اللَّهُ</span>.</li>
 <li><b>Hâ</b> <span class="ar">ه</span> change beaucoup : <span class="ar">هـ ـهـ ـه</span>. La forme médiane ـهـ ressemble à un petit « 8 » ou à deux boucles.</li>
 <li><b>ʿAyn / Ghayn</b> <span class="ar">ع غ</span> : en position médiane, la boucle se ferme — <span class="ar">ـعـ ـغـ</span>.</li>
 <li><b>Kâf</b> <span class="ar">ك</span> : en initiale/médiane devient un trait avec une hampe — <span class="ar">كـ ـكـ</span> ; en finale/isolée porte un petit signe à l'intérieur.</li>
@@ -298,7 +298,7 @@ html:`
 <h3>Sa prononciation : deux sons possibles</h3>
 <p>C'est la seule lettre dont le son dépend de ce qui suit :</p>
 <table class="th-table"><tr><th>Situation</th><th>Son</th><th>Exemple</th></tr>
-<tr><td><b>En liaison</b> (on continue la lecture)</td><td><b>« t »</b> + sa voyelle</td><td class="ar" data-say="رَحْمَةُ اللهِ">رَحْمَةُ اللهِ = rahma<b>tou</b>-llâh</td></tr>
+<tr><td><b>En liaison</b> (on continue la lecture)</td><td><b>« t »</b> + sa voyelle</td><td class="ar" data-say="رَحْمَةُ اللَّهِ">رَحْمَةُ اللَّهِ = rahma<b>tou</b>-llâh</td></tr>
 <tr><td><b>À l'arrêt</b> (on s'arrête sur le mot)</td><td><b>« h »</b> léger (comme un ه sâkina)</td><td class="ar" data-say="رَحْمَه">رَحْمَة ﴿arrêt﴾ = rahma<b>h</b></td></tr>
 </table>
 <table class="th-table"><tr><th>Mot</th><th>En liaison</th><th>À l'arrêt</th></tr>
@@ -357,16 +357,16 @@ html:`
 </table>
 <h3>Les deux hamza du début de mot</h3>
 <p>C'est LE point essentiel pour la lecture liée. En début de mot, il existe deux types de hamza qui se comportent très différemment :</p>
-<table class="th-table"><tr><th></th><th>Hamzat al-qat' (هَمْزَة القَطْع)</th><th>Hamzat al-wasl (هَمْزَة الوَصْل)</th></tr>
+<table class="th-table"><tr><th></th><th>Hamzat al-qat' (هَمْزَة الْقَطْع)</th><th>Hamzat al-wasl (هَمْزَة الْوَصْل)</th></tr>
 <tr><td><b>Écriture</b></td><td class="ar">أ / إ (avec le signe ء)</td><td class="ar">ٱ (alif nu, souvent avec un petit ص dessus)</td></tr>
 <tr><td><b>Prononciation</b></td><td><b>Toujours</b> prononcée, même en liaison</td><td>Prononcée <b>seulement si on commence</b> par ce mot ; <b>muette</b> en liaison</td></tr>
 <tr><td><b>Exemples</b></td><td class="ar" data-say="أَنْتَ إِنَّ أَحَد">أَنْتَ · إِنَّ · أَحَد</td><td class="ar" data-say="ٱلْحَمْدُ ٱهْدِنَا ٱسْم">ٱلْحَمْدُ · ٱهْدِنَا · ٱسْم</td></tr>
 </table>
 <p>On trouve la hamzat al-wasl dans : l'article <span class="ar">ٱل</span> ; quelques noms (<span class="ar" data-say="ٱسْم ٱبْن ٱمْرَأَة ٱثْنَان">ٱسْم، ٱبْن، ٱمْرَأَة، ٱثْنَان</span>) ; les verbes à l'impératif et certaines formes verbales (<span class="ar" data-say="ٱهْدِنَا ٱقْرَأْ ٱسْتَغْفِرْ">ٱهْدِنَا، ٱقْرَأْ، ٱسْتَغْفِرْ</span>).</p>
 <table class="th-table"><tr><th>Écrit</th><th>Lecture liée</th></tr>
-<tr><td class="ar big" data-say="بِسْمِ اللهِ الرَّحْمَٰنِ">بِسْمِ ٱللهِ ٱلرَّحْمَٰنِ</td><td>bismi-<b>llâhi r</b>-rahmân — jamais « bismi <i>al</i>-lâhi <i>al</i>-rahmân »</td></tr>
+<tr><td class="ar big" data-say="بِسْمِ اللَّهِ الرَّحْمَٰنِ">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ</td><td>bismi-<b>llâhi r</b>-rahmân — jamais « bismi <i>al</i>-lâhi <i>al</i>-rahmân »</td></tr>
 <tr><td class="ar big" data-say="وَإِيَّاكَ نَسْتَعِينُ ٱهْدِنَا">نَسْتَعِينُ ٱهْدِنَا</td><td>nastaʿînou-<b>hdinâ</b> (le ٱ s'efface)</td></tr>
-<tr><td class="ar big" data-say="قُلْ هُوَ اللهُ أَحَدٌ">قُلْ هُوَ ٱللهُ أَحَدٌ</td><td>qoul houwa-<b>llâhou ahad</b> — le ٱ de ٱللهُ s'efface, mais le أ de أَحَد se prononce</td></tr>
+<tr><td class="ar big" data-say="قُلْ هُوَ اللَّهُ أَحَدٌ">قُلْ هُوَ ٱللَّهُ أَحَدٌ</td><td>qoul houwa-<b>llâhou ahad</b> — le ٱ de ٱللَّهُ s'efface, mais le أ de أَحَد se prononce</td></tr>
 </table>
 <h3>Comment commencer par une hamzat al-wasl</h3>
 <p>Si tu commences ta lecture par un mot à hamzat al-wasl, tu lui donnes une voyelle :</p>
@@ -375,7 +375,7 @@ html:`
 <li><b>kasra</b> pour les noms et la plupart des verbes → <span class="ar" data-say="ٱهْدِنَا">ٱهْدِنَا</span> = <b>i</b>hdinâ, <span class="ar" data-say="ٱسْم">ٱسْم</span> = <b>i</b>sm, <span class="ar" data-say="ٱقْرَأْ">ٱقْرَأْ</span> = <b>i</b>qra'</li>
 <li><b>damma</b> si la 3e lettre du verbe porte une damma → <span class="ar" data-say="ٱنْصُرْ">ٱنْصُرْ</span> = <b>ou</b>nsour, <span class="ar" data-say="ٱدْخُلُوا">ٱدْخُلُوا</span> = <b>ou</b>dkhouloû</li>
 </ul>
-<div class="th-tip">💡 Le mot <span class="ar" data-say="الله">الله</span> lui-même commence par une hamzat al-wasl : « <b>A</b>llâh » au début, mais « …i-<b>llâh</b> », « …a-<b>llâh</b> » en liaison (بِسْمِ اللهِ = bismi<b>llâh</b>).</div>
+<div class="th-tip">💡 Le mot <span class="ar" data-say="اللَّه">اللَّه</span> lui-même commence par une hamzat al-wasl : « <b>A</b>llâh » au début, mais « …i-<b>llâh</b> », « …a-<b>llâh</b> » en liaison (بِسْمِ اللَّهِ = bismi<b>llâh</b>).</div>
 `},
 
 { key:"ch13", icon:"☀️", title:"Lettres solaires et lunaires", sub:"L'article ال et son assimilation",
@@ -404,13 +404,13 @@ html:`
 <tr><td class="ar big" data-say="الْعَالَمِين">الْعَالَمِين</td><td><b>al</b>-ʿâlamîn</td><td>les mondes</td></tr>
 </table>
 <div class="th-tip">💡 Repère visuel infaillible dans le Coran : si la lettre après ال porte une <b>shadda</b>, elle est solaire (le lâm est muet) ; si le lâm porte un <b>soukoun</b>, la lettre est lunaire (le lâm se prononce).</div>
-<div class="th-warn">⚠️ Le ٱ de l'article est une hamzat al-wasl : en liaison, on ne prononce ni le « a » ni le lâm (si solaire). <span class="ar" data-say="بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ">بِسْمِ ٱللهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span> = bismi-llâhi-<b>r</b>-rahmâni-<b>r</b>-rahîm.</div>
+<div class="th-warn">⚠️ Le ٱ de l'article est une hamzat al-wasl : en liaison, on ne prononce ni le « a » ni le lâm (si solaire). <span class="ar" data-say="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span> = bismi-llâhi-<b>r</b>-rahmâni-<b>r</b>-rahîm.</div>
 `},
 
 { key:"ch14", icon:"👻", title:"Lettres muettes et signes du mushaf", sub:"L'alif de protection, les petits cercles, les lettres suscrites",
 html:`
 <p>Le Coran est imprimé selon l'<b>orthographe ʿuthmânienne</b> (رَسْم عُثْمَانِي), fixée au temps du calife ʿUthmân. Elle contient quelques particularités qu'il faut connaître pour ne pas prononcer ce qui ne doit pas l'être.</p>
-<h3>L'alif muet après le wâw (أَلِف الوِقَايَة)</h3>
+<h3>L'alif muet après le wâw (أَلِف الْوِقَايَة)</h3>
 <p>Après un <b>و de pluriel</b> en fin de verbe, on écrit un alif qui <b>ne se prononce jamais</b> — c'est l'« alif de protection » :</p>
 <table class="th-table"><tr><th>Écrit</th><th>Prononcé</th><th>Sens</th></tr>
 <tr><td class="ar big" data-say="آمَنُوا">آمَنُوا</td><td>âmanoû (pas « âmanoûâ »)</td><td>ils ont cru</td></tr>
@@ -422,7 +422,7 @@ html:`
 <p>Dans le mushaf, un <b>petit cercle</b> au-dessus d'une lettre signale qu'elle est <b>muette</b> (en liaison comme à l'arrêt) :</p>
 <ul>
 <li><span class="ar big" data-say="قَالُوا">قَالُوا۟</span> — l'alif de protection porte ce cercle</li>
-<li><span class="ar big" data-say="أُولَئِكَ">أُو۟لَئِكَ</span> — le و est muet : « oulâ'ika »</li>
+<li><span class="ar big" data-say="أُولَٰئِكَ">أُو۟لَٰئِكَ</span> — le و est muet : « oulâ'ika »</li>
 <li><span class="ar big" data-say="مِائَة">مِا۟ئَة</span> — l'alif est muet : « mi'a » (cent)</li>
 </ul>
 <p>Un <b>cercle ovale allongé</b> ۠ indique une lettre muette en liaison mais prononcée à l'arrêt : <span class="ar big" data-say="أَنَا">أَنَا۠</span> — « ana » en liaison (a bref), « anâ » à l'arrêt.</p>
@@ -445,7 +445,7 @@ html:`
 // ════════════════════════════════════════════════════════════
 { key:"ch15", icon:"🛑", title:"Waqf et wasl : s'arrêter et lier", sub:"Ce qui change à la fin d'un mot selon qu'on s'arrête ou qu'on continue",
 html:`
-<p><b>Waqf</b> (الوَقْف) = <b>s'arrêter</b> sur un mot (fin de verset, pause pour respirer).<br><b>Wasl</b> (الوَصْل) = <b>lier</b> un mot au suivant sans s'arrêter.</p>
+<p><b>Waqf</b> (الْوَقْف) = <b>s'arrêter</b> sur un mot (fin de verset, pause pour respirer).<br><b>Wasl</b> (الْوَصْل) = <b>lier</b> un mot au suivant sans s'arrêter.</p>
 <p>La prononciation de la <b>fin d'un mot change</b> selon qu'on s'arrête dessus ou qu'on le lie au suivant. C'est indispensable : lire un mot « en liaison » alors qu'on s'arrête (ou l'inverse) est une erreur de lecture. Règle générale : <b>en liaison on prononce tout tel qu'écrit ; à l'arrêt on « allège » la fin du mot</b>.</p>
 
 <h3>Règle 1 — À l'arrêt, la voyelle finale disparaît</h3>
@@ -456,7 +456,7 @@ html:`
 <tr><td class="ar big" data-say="نَسْتَعِينُ">نَسْتَعِينُ</td><td>nastaʿîn<b>ou</b></td><td>nastaʿîn</td></tr>
 <tr><td class="ar big" data-say="كِتَابٌ">كِتَابٌ</td><td>kitâb<b>oun</b></td><td>kitâb</td></tr>
 <tr><td class="ar big" data-say="كِتَابٍ">كِتَابٍ</td><td>kitâb<b>in</b></td><td>kitâb</td></tr>
-<tr><td class="ar big" data-say="اللهُ">اللهُ</td><td>Allâh<b>ou</b></td><td>Allâh</td></tr>
+<tr><td class="ar big" data-say="اللَّهُ">اللَّهُ</td><td>Allâh<b>ou</b></td><td>Allâh</td></tr>
 </table>
 <p>C'est pour cela qu'on dit « Allâh » et non « Allâhou » en fin de phrase, et « al-ʿâlamîn » à la fin du 2e verset de la Fâtiha.</p>
 
@@ -480,7 +480,7 @@ html:`
 <tr><td class="ar big" data-say="الصَّلَاةِ">الصَّلَاةِ</td><td>aṣ-ṣalâ<b>ti</b></td><td>aṣ-ṣalâ<b>h</b></td></tr>
 <tr><td class="ar big" data-say="الْقِيَامَةِ">الْقِيَامَةِ</td><td>al-qiyâma<b>ti</b></td><td>al-qiyâma<b>h</b></td></tr>
 </table>
-<p>Une <b>tâ ouverte</b> (ت) finale reste « t » à l'arrêt : <span class="ar" data-say="بِنْتٌ">بِنْتٌ</span> → bin<b>t</b> ; <span class="ar" data-say="رَحْمَتَ اللهِ">رَحْمَتَ</span> (orthographe coranique dans certains versets) → rahma<b>t</b>.</p>
+<p>Une <b>tâ ouverte</b> (ت) finale reste « t » à l'arrêt : <span class="ar" data-say="بِنْتٌ">بِنْتٌ</span> → bin<b>t</b> ; <span class="ar" data-say="رَحْمَتَ اللَّهِ">رَحْمَتَ</span> (orthographe coranique dans certains versets) → rahma<b>t</b>.</p>
 
 <h3>Règle 4 — Shadda conservée, voyelles longues inchangées</h3>
 <ul>
@@ -494,8 +494,8 @@ html:`
 <h3>Règle 5 — En liaison, la hamzat al-wasl disparaît</h3>
 <p>L'alif de liaison (<span class="ar">ٱ</span>) ne se prononce <b>qu'au début</b> d'une lecture. En liaison avec le mot précédent, il est <b>muet</b> — et si c'est l'article ال devant une lettre solaire, le lâm est muet aussi (chapitre 12 et 13) :</p>
 <table class="th-table"><tr><th>Écrit</th><th>Si on commence par ce mot</th><th>En liaison</th></tr>
-<tr><td class="ar big" data-say="بِسْمِ اللهِ الرَّحْمَٰنِ">بِسْمِ ٱللهِ ٱلرَّحْمَٰنِ</td><td>—</td><td>bismi-<b>llâhi r</b>-rahmân</td></tr>
-<tr><td class="ar big" data-say="الْحَمْدُ لِلهِ">ٱلْحَمْدُ لِلهِ</td><td><b>a</b>l-hamdou lillâh</td><td>—</td></tr>
+<tr><td class="ar big" data-say="بِسْمِ اللَّهِ الرَّحْمَٰنِ">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ</td><td>—</td><td>bismi-<b>llâhi r</b>-rahmân</td></tr>
+<tr><td class="ar big" data-say="الْحَمْدُ لِلَّهِ">ٱلْحَمْدُ لِلَّهِ</td><td><b>a</b>l-hamdou lillâh</td><td>—</td></tr>
 <tr><td class="ar big" data-say="نَسْتَعِينُ ٱهْدِنَا">نَسْتَعِينُ ٱهْدِنَا</td><td>—</td><td>nastaʿînou-<b>hdinâ</b></td></tr>
 <tr><td class="ar big" data-say="ٱهْدِنَا الصِّرَاطَ">ٱهْدِنَا ٱلصِّرَاطَ</td><td><b>i</b>hdinâ-ṣ-ṣirâṭ</td><td>—</td></tr>
 <tr><td class="ar big" data-say="وَأَنْتُمْ">وَأَنْتُمْ</td><td>—</td><td>wa-<b>'</b>antoum (hamzat al-qat' : toujours prononcée !)</td></tr>
@@ -515,8 +515,8 @@ html:`
 
 <h3>Exemple complet : Al-Fâtiha à l'arrêt de chaque verset</h3>
 <ul>
-<li><span class="ar" data-say="بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ">بِسْمِ ٱللهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span> → … ar-rahîm (kasra supprimée, madd allongé)</li>
-<li><span class="ar" data-say="الْحَمْدُ لِلهِ رَبِّ الْعَالَمِينَ">ٱلْحَمْدُ لِلهِ رَبِّ ٱلْعَالَمِينَ</span> → … al-ʿâlamîn</li>
+<li><span class="ar" data-say="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span> → … ar-rahîm (kasra supprimée, madd allongé)</li>
+<li><span class="ar" data-say="الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ</span> → … al-ʿâlamîn</li>
 <li><span class="ar" data-say="مَالِكِ يَوْمِ الدِّينِ">مَٰلِكِ يَوْمِ ٱلدِّينِ</span> → … ad-dîn (lettre solaire د)</li>
 <li><span class="ar" data-say="إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</span> → … nastaʿîn</li>
 <li><span class="ar" data-say="اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ">ٱهْدِنَا ٱلصِّرَاطَ ٱلْمُسْتَقِيمَ</span> → <b>i</b>hdinâ-ṣ-ṣirâṭa-l-moustaqîm</li>
@@ -529,12 +529,12 @@ html:`
 html:`
 <h3>Avant de commencer</h3>
 <p>Avant toute lecture du Coran, on prononce l'<b>isti'âdha</b> (recherche de refuge — Coran 16:98) :</p>
-<p class="ar big center" data-say="أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ">أَعُوذُ بِٱللهِ مِنَ ٱلشَّيْطَانِ ٱلرَّجِيمِ</p>
+<p class="ar big center" data-say="أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ">أَعُوذُ بِٱللَّهِ مِنَ ٱلشَّيْطَانِ ٱلرَّجِيمِ</p>
 <p>« Aʿoûdhou billâhi mina-sh-shaytâni-r-rajîm » — Je cherche refuge auprès d'Allah contre Satan le lapidé.</p>
 <p>Puis, au début de chaque sourate (sauf At-Tawba, n°9), la <b>basmala</b> :</p>
-<p class="ar big center" data-say="بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ">بِسْمِ ٱللهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
-<p>« Bismillâhi-r-rahmâni-r-rahîm ». Observe toutes les règles déjà vues : le ٱ de ٱللهِ est muet (bismi<b>llâh</b>), le lâm est fin car précédé de kasra (chapitre 21), les ٱل de ٱلرَّحْمَٰن et ٱلرَّحِيم sont solaires (a<b>r</b>-), le petit alif de الرَّحْمَٰن se lit « â », et le م final perd sa kasra à l'arrêt avec un madd allongé.</p>
-<h3>Les symboles d'arrêt (عَلَامَات الوَقْف)</h3>
+<p class="ar big center" data-say="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+<p>« Bismillâhi-r-rahmâni-r-rahîm ». Observe toutes les règles déjà vues : le ٱ de ٱللَّهِ est muet (bismi<b>llâh</b>), le lâm est fin car précédé de kasra (chapitre 21), les ٱل de ٱلرَّحْمَٰن et ٱلرَّحِيم sont solaires (a<b>r</b>-), le petit alif de الرَّحْمَٰن se lit « â », et le م final perd sa kasra à l'arrêt avec un madd allongé.</p>
+<h3>Les symboles d'arrêt (عَلَامَات الْوَقْف)</h3>
 <p>Le texte coranique contient de petits symboles au-dessus des mots qui indiquent où l'on peut ou doit s'arrêter, afin de ne pas couper le sens :</p>
 <table class="th-table"><tr><th>Symbole</th><th>Nom</th><th>Signification</th></tr>
 <tr><td class="ar big">مـ</td><td>waqf lâzim</td><td><b>Arrêt obligatoire</b> — continuer changerait le sens</td></tr>
@@ -549,7 +549,7 @@ html:`
 <h3>Où respirer ?</h3>
 <ul>
 <li>Le meilleur arrêt est en <b>fin de verset</b>.</li>
-<li>Ne t'arrête jamais entre un mot et celui qui le complète directement (ex. entre <span class="ar">بِسْمِ</span> et <span class="ar">ٱللهِ</span>).</li>
+<li>Ne t'arrête jamais entre un mot et celui qui le complète directement (ex. entre <span class="ar">بِسْمِ</span> et <span class="ar">ٱللَّهِ</span>).</li>
 <li>Si tu es à court de souffle, arrête-toi, puis <b>reprends un ou deux mots avant</b> pour rétablir le sens.</li>
 <li>Applique alors toutes les règles du chapitre 15 : voyelle finale supprimée, tanwin fath → â, tâ marboûta → h.</li>
 </ul>
@@ -603,7 +603,7 @@ html:`
 
 { key:"ch19", icon:"👃", title:"La ghounna, le noûn sâkina et le tanwin", sub:"Izhâr, idghâm, iqlâb, ikhfâ' — les 4 règles les plus célèbres",
 html:`
-<h3>La ghounna (الغُنَّة)</h3>
+<h3>La ghounna (الْغُنَّة)</h3>
 <p>La <b>ghounna</b> est un son <b>nasal</b> (qui sort par le nez) d'une durée de <b>2 temps</b>. Elle est <b>obligatoire</b> sur un <span class="ar">ن</span> ou un <span class="ar">م</span> avec <b>shadda</b> :</p>
 <p><span class="ar big" data-say="إِنَّ">إِنَّ</span> · <span class="ar big" data-say="ثُمَّ">ثُمَّ</span> · <span class="ar big" data-say="الْجَنَّة">ٱلْجَنَّة</span> · <span class="ar big" data-say="مُحَمَّد">مُحَمَّد</span> · <span class="ar big" data-say="مِنَ الْجِنَّةِ وَالنَّاسِ">مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ</span></p>
 <p>Elle apparaît aussi dans plusieurs des règles ci-dessous.</p>
@@ -654,8 +654,8 @@ html:`
 </table>
 <h3>Le lâm du mot « Allah »</h3>
 <table class="th-table"><tr><th>Cas</th><th>Prononciation</th><th>Exemples</th></tr>
-<tr><td>précédé d'une <b>fatha</b> ou d'une <b>damma</b></td><td>tafkhîm : « A<b>ll</b>âh » plein</td><td class="ar" data-say="قَالَ اللهُ رَسُولُ اللهِ اللهُ أَكْبَرُ">قَالَ ٱللهُ · رَسُولُ ٱللهِ · ٱللهُ أَكْبَرُ</td></tr>
-<tr><td>précédé d'une <b>kasra</b></td><td>tarqîq : lâm léger</td><td class="ar" data-say="بِسْمِ اللهِ لِلهِ الْحَمْدُ لِلهِ">بِسْمِ ٱللهِ · لِلهِ · ٱلْحَمْدُ لِلهِ</td></tr>
+<tr><td>précédé d'une <b>fatha</b> ou d'une <b>damma</b></td><td>tafkhîm : « A<b>ll</b>âh » plein</td><td class="ar" data-say="قَالَ اللَّهُ رَسُولُ اللَّهِ اللَّهُ أَكْبَرُ">قَالَ ٱللَّهُ · رَسُولُ ٱللَّهِ · ٱللَّهُ أَكْبَرُ</td></tr>
+<tr><td>précédé d'une <b>kasra</b></td><td>tarqîq : lâm léger</td><td class="ar" data-say="بِسْمِ اللَّهِ لِلَّهِ الْحَمْدُ لِلَّهِ">بِسْمِ ٱللَّهِ · لِلَّهِ · ٱلْحَمْدُ لِلَّهِ</td></tr>
 </table>
 <p>Tous les autres lâm sont toujours <b>fins</b>.</p>
 <div class="th-tip">💡 Test : dis « bismi<b>llâh</b> » (lâm fin, la langue reste plate) puis « qâla<b>llâh</b> » (lâm plein, l'arrière de la langue monte). La différence doit s'entendre.</div>

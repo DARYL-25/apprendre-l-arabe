@@ -1,0 +1,8 @@
+# Ces dossiers sont générés automatiquement par Capacitor (npx cap add android / ios).
+# Inutile de les mettre sur GitHub : ils sont recréés en 1 commande sur ta machine
+# au moment de compiler l'app mobile (voir GUIDE-PUBLICATION.md, section 4 et 5).
+node_modules/
+www/
+android/
+ios/
+*.log
