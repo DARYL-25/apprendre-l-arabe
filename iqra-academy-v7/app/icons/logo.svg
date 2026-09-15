@@ -1,0 +1,60 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="greenSphere" cx="38%" cy="34%" r="75%">
+      <stop offset="0%" stop-color="#1f8a5c"/>
+      <stop offset="45%" stop-color="#146b48"/>
+      <stop offset="80%" stop-color="#0f5138"/>
+      <stop offset="100%" stop-color="#0a2e22"/>
+    </radialGradient>
+
+    <linearGradient id="goldFaceClean" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#fdf0c2"/>
+      <stop offset="35%" stop-color="#f3cd6f"/>
+      <stop offset="70%" stop-color="#d9a63f"/>
+      <stop offset="100%" stop-color="#b17f22"/>
+    </linearGradient>
+
+    <linearGradient id="goldHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <radialGradient id="rimLight" cx="35%" cy="28%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+
+    <filter id="letterShadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="6" dy="10" stdDeviation="10" flood-color="#04150e" flood-opacity="0.55"/>
+    </filter>
+
+    <clipPath id="circleClip">
+      <circle cx="512.0" cy="512.0" r="470"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background circle -->
+  <g filter="url(#softShadow)">
+    <circle cx="512.0" cy="512.0" r="470" fill="url(#greenSphere)"/>
+  </g>
+
+  <g clip-path="url(#circleClip)">
+    <circle cx="512.0" cy="512.0" r="470" fill="url(#rimLight)"/>
+    <!-- thin inner rim for polish -->
+    <circle cx="512.0" cy="512.0" r="464" fill="none" stroke="#062018" stroke-opacity="0.5" stroke-width="4"/>
+  </g>
+
+  <!-- 3D extruded gold letter -->
+  <g filter="url(#letterShadow)">
+    <text x="524.60" y="660.20" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#5a3d0a">إ</text><text x="523.70" y="658.90" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#5d400b">إ</text><text x="522.80" y="657.60" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#61430c">إ</text><text x="521.90" y="656.30" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#64450d">إ</text><text x="521.00" y="655.00" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#68480d">إ</text><text x="520.10" y="653.70" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#6b4b0e">إ</text><text x="519.20" y="652.40" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#6f4e0f">إ</text><text x="518.30" y="651.10" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#725010">إ</text><text x="517.40" y="649.80" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#755311">إ</text><text x="516.50" y="648.50" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#795612">إ</text><text x="515.60" y="647.20" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#7c5913">إ</text><text x="514.70" y="645.90" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#805c13">إ</text><text x="513.80" y="644.60" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#835e14">إ</text><text x="512.90" y="643.30" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="#876115">إ</text>
+    <text x="512.0" y="642.0" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="url(#goldFaceClean)" stroke="#7a561a" stroke-width="2.5">إ</text>
+    <text x="512.0" y="642.0" font-family="Amiri Quran, Amiri, serif" font-size="660" text-anchor="middle" fill="url(#goldHighlight)" opacity="0.5">إ</text>
+  </g>
+
+  <!-- outer ring -->
+  <circle cx="512.0" cy="512.0" r="468" fill="none" stroke="#0a2e22" stroke-opacity="0.6" stroke-width="4"/>
+</svg>
