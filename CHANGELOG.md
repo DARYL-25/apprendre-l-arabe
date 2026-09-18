@@ -1,5 +1,9 @@
 # 📝 Journal des versions — Iqra Academy
 
+## Ajout — 16 septembre 2026 · Publication iOS sans Mac
+- 🍎 `codemagic.yaml` : pipeline de compilation iOS dans le cloud (Codemagic, palier gratuit 500 min/mois) — plus besoin de Mac ni de location coûteuse, seul le compte Apple Developer (99 $/an) reste payant
+- 📘 `GUIDE-PUBLICATION.md`, section 5 réécrite avec la marche à suivre précise
+
 ## v8 — 15 septembre 2026 · « Arabe parfait »
 - 🔤 **Nouvelle police arabe : Noto Naskh Arabic** (au lieu d'Amiri). Fini les voyelles minuscules, les kasra mal placées, les lettres empilées/collées (مُحَمَّد, لِلَّهِ…). Voyelles nettes, lettres bien séparées.
 - 📦 **Polices hébergées dans l'app** (`fonts/`, plus de Google Fonts) : rendu strictement identique sur iPhone, Android, web, hors-ligne et dans les apps natives.

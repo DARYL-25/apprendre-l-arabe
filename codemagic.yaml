@@ -1,0 +1,78 @@
+## ============================================================
+## Iqra Academy — Compilation iOS dans le cloud (Codemagic)
+## ------------------------------------------------------------
+## Ce fichier permet de compiler l'app iOS SANS Mac : Codemagic loue un vrai
+## Mac dans son datacenter, y installe le projet, compile, signe et envoie
+## le résultat sur TestFlight — automatiquement, à chaque mise à jour.
+## Voir GUIDE-PUBLICATION.md, section "Publier sur l'App Store (méthode
+## recommandée, sans Mac)" pour la configuration en quelques clics.
+## ============================================================
+workflows:
+  ios-iqra-academy:
+    name: Iqra Academy — iOS (TestFlight)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: iqra_academy_asc   # nom donné à la clé App Store Connect dans Codemagic (étape 3 du guide)
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.iqraacademy.app
+      vars:
+        XCODE_WORKSPACE: "mobile/ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        BUNDLE_ID: "com.iqraacademy.app"
+      node: latest
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+      cancel_previous_builds: true
+    scripts:
+      - name: Installer les dépendances (dossier mobile/)
+        script: cd mobile && npm ci
+
+      - name: Préparer le web + créer le projet iOS s'il n'existe pas encore
+        script: |
+          cd mobile
+          node build-www.js
+          if [ ! -d ios ]; then npx cap add ios; fi
+          npx cap sync ios
+
+      - name: Installer les dépendances CocoaPods
+        script: |
+          cd mobile/ios/App
+          pod install
+
+      - name: Appliquer la signature automatique (certificats gérés par Codemagic)
+        script: |
+          xcode-project use-profiles
+
+      - name: Augmenter automatiquement le numéro de build
+        script: |
+          cd mobile/ios/App
+          LATEST=$(app-store-connect get-latest-app-store-build-number "$BUNDLE_ID" || echo 0)
+          agvtool new-version -all $(($LATEST + 1))
+
+      - name: Compiler l'app (.ipa)
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false   # tu soumets à la review manuellement depuis App Store Connect quand tu es prêt
+      email:
+        recipients:
+          - CHANGE_MOI@exemple.com   # ⬅️ mets ton e-mail : Codemagic t'écrit si la compilation échoue

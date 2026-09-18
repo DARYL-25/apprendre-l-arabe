@@ -157,29 +157,45 @@ Dans Android Studio : **Run ▶** avec un émulateur ou ton téléphone branché
 
 ---
 
-## 5. Publier sur l'App Store (iOS)
+## 5. Publier sur l'App Store (iOS) — sans Mac, en dépensant le moins possible
 
-### Ce qu'il te faut — soyons honnêtes
-- **Un Mac** avec **Xcode** (gratuit). Apple ne permet pas de compiler une app iOS sans Mac. Alternatives si tu n'en as pas : un Mac d'occasion (Mac mini M1 ≈ 400 €), ou un « Mac dans le cloud » (MacinCloud, ~30 $/mois) ; il existe aussi des services de compilation en ligne (Codemagic) mais c'est plus technique.
-- **Apple Developer Program** : https://developer.apple.com/programs — **99 $/an** (compte personnel possible, pas besoin de société).
+**Coût total réel : 99 $/an (Apple), 0 € pour le reste.** Apple exige un Mac pour compiler — mais ce Mac peut être **loué à la minute dans le cloud** au lieu d'être acheté. C'est exactement ce que fait **Codemagic** (le fichier `codemagic.yaml` est déjà écrit et à la racine du projet) : à chaque mise à jour envoyée sur GitHub, un vrai Mac démarre dans un datacenter, compile l'app, la signe et l'envoie sur TestFlight — tout seul. Le palier gratuit est de **500 minutes par mois** ; une compilation prend ~10-15 min, donc largement de quoi publier et mettre à jour régulièrement sans jamais payer Codemagic.
 
-### 5.1 Construire
-Sur le Mac, terminal dans `mobile/` :
-```
-sudo gem install cocoapods      (une seule fois)
-npm install
-npm run ios
-```
-Xcode s'ouvre. Dans **Signing & Capabilities** : coche **Automatically manage signing** et choisis ton équipe (ton compte développeur). Bundle ID : `com.iqraacademy.app` (change-le si tu veux, mais avant la 1re publication). Ajoute la capability **In-App Purchase** (bouton +).
+Ton iPhone/iPad servent ensuite uniquement à **tester** le résultat via l'app TestFlight — pas à compiler.
 
-Teste sur ton iPhone branché (**Run ▶**).
+### 5.1 Compte Apple Developer (obligatoire, 99 $/an)
+1. https://developer.apple.com/programs → **Enroll** → compte **Individual** (pas besoin de société) → paiement 99 $.
+2. Validation par Apple : quelques heures à 2 jours.
 
-### 5.2 App Store Connect
-1. https://appstoreconnect.apple.com → **Mes apps → +** → nom « Iqra Academy », bundle ID ci-dessus, SKU `iqra-academy`.
-2. Fiche : icône (Xcode l'envoie automatiquement, elle est déjà dans le projet), captures d'écran iPhone 6,7" (et 6,5"), description, catégorie Éducation, URL de confidentialité = la même qu'Android.
-3. **Fonctionnalités → Achats intégrés** : crée `iqra_premium` (non consommable, 4,99 €) pour RevenueCat.
-4. Dans Xcode : **Product → Archive → Distribute App → App Store Connect → Upload**.
-5. Dans App Store Connect, sélectionne le build, remplis la « Review Information » (compte de test : crée un compte e-mail/mot de passe dans ton app et donne-le à Apple), **Soumettre pour vérification**. Compte 1-3 jours.
+### 5.2 Créer la fiche de l'app sur App Store Connect (dans ton navigateur, aucun Mac requis)
+1. https://appstoreconnect.apple.com → **Mes apps → +ᐧ Nouvelle app**.
+2. Nom « Iqra Academy », langue française, Bundle ID → **Enregistrer un nouveau** : `com.iqraacademy.app`, SKU : `iqra-academy`.
+3. Fiche : icône = `store-assets/ios/AppIcon-1024.png`, captures d'écran (prends-les depuis ton iPhone/iPad une fois l'app testée via TestFlight — voir 5.5), description, catégorie Éducation, URL de confidentialité = `https://daryl-25.github.io/apprendre-l-arabe/confidentialite.html`.
+4. **Fonctionnalités → Achats intégrés** → **+** → Non consommable → référence `iqra_premium`, 4,99 € → pour RevenueCat (voir section 3.3 plus haut).
+
+### 5.3 Connecter Codemagic (10 minutes, une seule fois)
+1. https://codemagic.io/signup → **Sign up with GitHub** (autorise l'accès à ton compte GitHub).
+2. **Add application** → choisis le dépôt `apprendre-l-arabe` → Codemagic détecte automatiquement `codemagic.yaml` à la racine → **Save**.
+3. Créer la clé de signature automatique : sur https://appstoreconnect.apple.com → **Users and Access → Integrations → App Store Connect API** → **+** → nom `Codemagic`, accès **App Manager** → **Generate**. Télécharge le fichier `.p8` (⚠️ téléchargeable une seule fois, garde-le).
+4. Dans Codemagic : **Teams → Personal Account → Integrations → App Store Connect** → **+ Add integration** → nom `iqra_academy_asc` (⚠️ exactement ce nom, il est déjà écrit dans `codemagic.yaml`) → renseigne l'Issuer ID, le Key ID (visibles sur la page Apple de l'étape 3) et le fichier `.p8`.
+5. Ouvre `codemagic.yaml` (à la racine de ton projet) et remplace `CHANGE_MOI@exemple.com` par ta vraie adresse e-mail — c'est là que Codemagic te préviendra si une compilation échoue.
+
+### 5.4 Lancer la première compilation
+1. Envoie `codemagic.yaml` sur GitHub (avec GitHub Desktop, comme d'habitude) si ce n'est pas déjà fait.
+2. Sur codemagic.io → ton app → **Start new build** → branche `main` → workflow `Iqra Academy — iOS (TestFlight)` → **Start build**.
+3. Suis les logs en direct (~10-15 min). ✅ vert à la fin → le build est automatiquement envoyé sur TestFlight. ❌ rouge → clique sur l'étape en erreur, les logs disent quoi corriger (souvent : nom d'intégration mal orthographié à l'étape 5.3.4).
+4. **Pour chaque mise à jour future** : envoie ton code sur GitHub → Codemagic recompile automatiquement (le fichier prévoit `triggering: push` sur la branche `main`) → nouvelle version sur TestFlight.
+
+### 5.5 Tester sur ton iPhone / iPad avec TestFlight
+1. Sur https://appstoreconnect.apple.com → ton app → onglet **TestFlight** → ajoute-toi comme testeur interne (ton propre e-mail Apple).
+2. Installe l'app **TestFlight** (App Store) sur ton iPhone/iPad → accepte l'invitation reçue par e-mail → installe Iqra Academy.
+3. Teste tout (comptes, mode infini, Premium en mode sandbox, sons). C'est le moment de prendre les captures d'écran pour la fiche (5.2.3).
+
+### 5.6 Soumettre à la review Apple
+Sur App Store Connect → ton app → sélectionne le build reçu via TestFlight → remplis la « Review Information » (donne un compte e-mail/mot de passe de test à Apple, crée-en un dédié dans l'app) → **Soumettre pour vérification**. Compte 1-3 jours.
+
+### Si tu préfères quand même un Mac (option B, plus chère)
+Le dossier `mobile/` fonctionne aussi en local sur un vrai Mac avec Xcode : `npm install` puis `npm run ios` dans `mobile/`, puis **Product → Archive → Distribute App** dans Xcode. Utile seulement si tu as accès à un Mac gratuitement (ami, famille) — sinon Codemagic reste moins cher qu'une location mensuelle.
 
 ### Points sur lesquels Apple est strict (déjà gérés dans le code)
 - ✅ Suppression de compte possible dans l'app (Profil → Supprimer mon compte).
