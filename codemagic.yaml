@@ -75,4 +75,4 @@ workflows:
         submit_to_app_store: false   # tu soumets à la review manuellement depuis App Store Connect quand tu es prêt
       email:
         recipients:
-          - daryl.jain@exemple.com   # ⬅️ mets ton e-mail : Codemagic t'écrit si la compilation échoue
+          - daryl.jain@gmail.com   # ⬅️ mets ton e-mail : Codemagic t'écrit si la compilation échoue
