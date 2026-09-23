@@ -13,7 +13,7 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m2
     integrations:
-      app_store_connect: iqra_academy_asc   # nom donné à la clé App Store Connect dans Codemagic (étape 3 du guide)
+      app_store_connect: iqra_academy_asc   # nom donné à l'intégration créée dans Codemagic (Team > Integrations)
     environment:
       ios_signing:
         distribution_type: app_store
@@ -48,7 +48,7 @@ workflows:
           cd mobile/ios/App
           pod install
 
-      - name: Appliquer la signature automatique (certificats gérés par Codemagic)
+      - name: Appliquer la signature sur le projet Xcode (certificat + profil déjà enregistrés dans Codemagic)
         script: |
           xcode-project use-profiles
 
