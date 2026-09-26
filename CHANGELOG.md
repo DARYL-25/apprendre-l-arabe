@@ -1,5 +1,10 @@
 # 📝 Journal des versions — Iqra Academy
 
+## v9.1 — 26 septembre 2026 · Préparation App Store
+- 📸 Captures d'écran App Store (iPhone 6,7" et iPad 13") dans `store-assets/ios/screenshots/`
+- 📝 `FICHE-APP-STORE.md` : tous les textes et réponses de la fiche, prêts à copier-coller
+- 🛟 `support.html` : page d'assistance (URL obligatoire pour l'App Store) ; e-mail de contact ajouté à la politique de confidentialité
+
 ## v9 — 25 septembre 2026 · « Entraînement sur mesure & sauvegardes »
 - ♾️ **Entraînement infini paramétrable** (écran « Personnaliser ») : contenu (lettres, formes, syllabes, lecture, mots du Coran), choix des lettres (grille des 28), voyelles, positions, règles de lecture, thèmes du vocabulaire, types de questions (lire, reconnaître l'écrit, écouter, comprendre), **niveau** (Facile 3 choix · Moyen 4 · Difficile piégeux avec lettres sœurs · Expert 6 choix + construire les mots), **vies** (illimitées / 5 / 3), **chrono** (aucun / 15 s / 8 s), record personnel. Les réglages sont mémorisés ; accès rapide conservé.
 - 🔊 **Bismillah** de l'accueil : vraie récitation (Al-Fâtiha 1:1) au lieu de la voix de synthèse. Si l'appareil n'a aucune voix arabe, l'app ne lit plus l'arabe avec une voix française : elle affiche comment en installer une.
