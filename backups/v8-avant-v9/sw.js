@@ -1,11 +1,11 @@
 // Iqra Academy — Service worker : app disponible hors-ligne (sauf Coran/audio, qui
 // nécessitent internet la première fois puis sont mis en cache à la volée).
-const CACHE = "iqra-academy-v9";
+const CACHE = "iqra-academy-v8";
 const SHELL = [
   "./", "index.html", "css/style.css", "manifest.webmanifest",
   "js/data/letters.js", "js/data/vocab.js", "js/data/pdfcourse.js", "js/data/surahs.js", "js/data/theory.js",
   "js/icons.js", "js/audio.js", "js/quran.js", "js/exercises.js", "js/app.js",
-  "js/firebase-config.js", "js/cloud.js", "js/premium.js", "js/vendor/firebase.js",
+  "js/firebase-config.js", "js/cloud.js", "js/premium.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png", "icons/apple-touch-icon.png",
   "icons/logo-256.png", "icons/favicon-32.png",
   "fonts/noto-naskh-arabic-arabic-400-normal.woff2", "fonts/noto-naskh-arabic-arabic-500-normal.woff2",

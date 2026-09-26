@@ -5,8 +5,9 @@ import { TextToSpeech } from "@capacitor-community/text-to-speech";
 import { Purchases, LOG_LEVEL } from "@revenuecat/purchases-capacitor";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SplashScreen } from "@capacitor/splash-screen";
+import { Preferences } from "@capacitor/preferences";
 
-window.NativePlugins = { TextToSpeech, Purchases, LOG_LEVEL };
+window.NativePlugins = { TextToSpeech, Purchases, LOG_LEVEL, Preferences };
 
 if (Capacitor.isNativePlatform()) {
   StatusBar.setStyle({ style: Style.Dark }).catch(() => {});

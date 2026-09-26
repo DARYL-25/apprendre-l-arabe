@@ -187,7 +187,7 @@ Ton iPhone/iPad servent ensuite uniquement à **tester** le résultat via l'app 
 4. **Pour chaque mise à jour future** : envoie ton code sur GitHub → Codemagic recompile automatiquement (le fichier prévoit `triggering: push` sur la branche `main`) → nouvelle version sur TestFlight.
 
 ### 5.5 Tester sur ton iPhone / iPad avec TestFlight
-1. Sur https://appstoreconnect.apple.com → ton app → onglet **TestFlight** → ajoute-toi comme testeur interne (ton propre e-mail Apple).
+1. Sur https://appstoreconnect.apple.com → ton app → onglet **TestFlight** → à gauche, **Tests internes → +** → crée un groupe (ex. « Équipe ») en cochant **Activer la distribution automatique**, puis ajoute-toi dedans. Grâce à la distribution automatique, **chaque nouveau build envoyé par Codemagic t'arrive tout seul**, sans rien refaire à la main.
 2. Installe l'app **TestFlight** (App Store) sur ton iPhone/iPad → accepte l'invitation reçue par e-mail → installe Iqra Academy.
 3. Teste tout (comptes, mode infini, Premium en mode sandbox, sons). C'est le moment de prendre les captures d'écran pour la fiche (5.2.3).
 

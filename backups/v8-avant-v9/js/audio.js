@@ -36,30 +36,16 @@ window.Audio_ = (function(){
     const native = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
     return (native && window.NativePlugins && window.NativePlugins.TextToSpeech) || null;
   }
-  // Prévient une seule fois si l'appareil n'a aucune voix arabe (plutôt que de lire l'arabe avec une voix française)
-  let warned = false;
-  function warnNoVoice(){
-    if (warned) return; warned = true;
-    if (window.App && App.toast) App.toast("Aucune voix arabe n'est installée sur cet appareil : la prononciation audio est indisponible. (iPhone : Réglages → Accessibilité → Contenu énoncé → Voix → Arabe)");
-  }
-  let nativeArabic = null;   // null = pas encore vérifié
   function say(text, opts){
     if (!text) return;
     opts = opts || {};
-    // Application iOS/Android (Capacitor) : plugin natif
+    // Application iOS/Android (Capacitor) : plugin natif, fonctionne sur tous les appareils
     const tts = nativeTTS();
     if (tts) {
-      const speak = () => tts.stop().catch(()=>{}).then(() => tts.speak({ text, lang: "ar-SA", rate: opts.rate || 0.85, pitch: 1, category: "playback" })).catch(()=>{});
-      if (nativeArabic === true) return speak();
-      if (nativeArabic === false) return warnNoVoice();
-      (tts.isLanguageSupported ? tts.isLanguageSupported({ lang: "ar-SA" }) : Promise.resolve({ supported: true }))
-        .then(r => { nativeArabic = !!(r && r.supported); nativeArabic ? speak() : warnNoVoice(); })
-        .catch(() => { nativeArabic = true; speak(); });
+      tts.stop().catch(()=>{}).then(() => tts.speak({ text, lang: "ar-SA", rate: opts.rate || 0.85, pitch: 1, category: "playback" })).catch(()=>{});
       return;
     }
     if (!("speechSynthesis" in window)) return;
-    // voix chargées mais aucune en arabe → on ne lit pas l'arabe avec une voix d'une autre langue
-    try { if (speechSynthesis.getVoices().length && !hasArabicVoice()) { warnNoVoice(); return; } } catch(e){}
     try {
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
@@ -97,8 +83,5 @@ window.Audio_ = (function(){
   }
   function isPlaying(){ return !player.paused && !player.ended; }
 
-  // Bismillah récitée par un vrai récitateur (Al-Fâtiha 1:1) — bien plus beau qu'une voix de synthèse
-  function playBismillah(){ playAyah(1); }
-
-  return { say, hasArabicVoice, voicesFor, playAyah, stopAyah, isPlaying, playBismillah };
+  return { say, hasArabicVoice, voicesFor, playAyah, stopAyah, isPlaying };
 })();

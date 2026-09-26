@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Iqra Academy">
-<link rel="stylesheet" href="css/style.css?v=9">
+<link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
 
@@ -62,15 +62,6 @@
     <span class="top-stats"><span id="home-streak"><i data-icon="flame"></i>0</span><span id="home-xp">0 XP</span></span>
   </header>
   <div id="path"></div>
-</section>
-
-<!-- ============ Entraînement infini : réglages ============ -->
-<section class="screen" id="screen-infcfg">
-  <header class="topbar">
-    <button class="btn-icon" id="btn-back-infcfg"><i data-icon="back"></i></button>
-    <span class="logo"><i data-icon="sliders"></i>Entraînement infini</span>
-  </header>
-  <div id="infcfg-body"></div>
 </section>
 
 <!-- ============ Coran : liste ============ -->
@@ -133,13 +124,13 @@
     </label>
     <button class="btn small danger" id="btn-reset"><i data-icon="trash"></i>Réinitialiser ma progression</button>
   </div>
-  <div class="settings" id="backup-box"></div>
   <div class="settings" id="account-box"></div>
   <div class="settings" id="premium-box"></div>
   <div class="settings" id="support-box"></div>
   <div class="about">
     <p><b>Iqra Academy (اقرأ)</b> — « Lis ! », le premier mot du Coran révélé.</p>
     <p>Texte coranique et traductions : api.alquran.cloud · Récitations : cdn.islamic.network.</p>
+    <p>Ajoute l'app à ton écran d'accueil : dans Safari, <b>Partager → Sur l'écran d'accueil</b>.</p>
     <p><a href="confidentialite.html" target="_blank" rel="noopener">Politique de confidentialité</a></p>
   </div>
 </section>
@@ -187,18 +178,22 @@
   <button class="nav-btn" id="nav-profile"><i data-icon="user"></i>Profil</button>
 </nav>
 
-<script src="js/firebase-config.js?v=9"></script>
-<script src="js/icons.js?v=9"></script>
-<script src="js/data/letters.js?v=9"></script>
-<script src="js/data/vocab.js?v=9"></script>
-<script src="js/data/pdfcourse.js?v=9"></script>
-<script src="js/data/surahs.js?v=9"></script>
-<script src="js/data/theory.js?v=9"></script>
-<script src="js/audio.js?v=9"></script>
-<script src="js/quran.js?v=9"></script>
-<script src="js/exercises.js?v=9"></script>
-<script src="js/cloud.js?v=9"></script>
-<script src="js/premium.js?v=9"></script>
-<script src="js/app.js?v=9"></script>
+<!-- Firebase (comptes + sauvegarde en ligne) — inactif tant que js/firebase-config.js n'est pas rempli -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=8"></script>
+<script src="js/icons.js?v=8"></script>
+<script src="js/data/letters.js?v=8"></script>
+<script src="js/data/vocab.js?v=8"></script>
+<script src="js/data/pdfcourse.js?v=8"></script>
+<script src="js/data/surahs.js?v=8"></script>
+<script src="js/data/theory.js?v=8"></script>
+<script src="js/audio.js?v=8"></script>
+<script src="js/quran.js?v=8"></script>
+<script src="js/exercises.js?v=8"></script>
+<script src="js/cloud.js?v=8"></script>
+<script src="js/premium.js?v=8"></script>
+<script src="js/app.js?v=8"></script>
 </body>
 </html>

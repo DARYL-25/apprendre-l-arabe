@@ -3,10 +3,23 @@
   "appName": "Iqra Academy",
   "webDir": "www",
   "backgroundColor": "#0a2e22",
-  "android": { "allowMixedContent": false },
-  "ios": { "contentInset": "automatic", "backgroundColor": "#0a2e22" },
+  "android": {
+    "allowMixedContent": false
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#0a2e22",
+    "scrollEnabled": false
+  },
   "plugins": {
-    "SplashScreen": { "launchAutoHide": true, "backgroundColor": "#0a2e22", "showSpinner": false },
-    "StatusBar": { "style": "DARK", "backgroundColor": "#0a2e22" }
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "backgroundColor": "#0a2e22",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0a2e22"
+    }
   }
 }

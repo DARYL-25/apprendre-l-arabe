@@ -1,5 +1,17 @@
 # 📝 Journal des versions — Iqra Academy
 
+## v9 — 25 septembre 2026 · « Entraînement sur mesure & sauvegardes »
+- ♾️ **Entraînement infini paramétrable** (écran « Personnaliser ») : contenu (lettres, formes, syllabes, lecture, mots du Coran), choix des lettres (grille des 28), voyelles, positions, règles de lecture, thèmes du vocabulaire, types de questions (lire, reconnaître l'écrit, écouter, comprendre), **niveau** (Facile 3 choix · Moyen 4 · Difficile piégeux avec lettres sœurs · Expert 6 choix + construire les mots), **vies** (illimitées / 5 / 3), **chrono** (aucun / 15 s / 8 s), record personnel. Les réglages sont mémorisés ; accès rapide conservé.
+- 🔊 **Bismillah** de l'accueil : vraie récitation (Al-Fâtiha 1:1) au lieu de la voix de synthèse. Si l'appareil n'a aucune voix arabe, l'app ne lit plus l'arabe avec une voix française : elle affiche comment en installer une.
+- 💾 **Sauvegarde sans compte** : code de sauvegarde à copier/partager puis restaurer (fusion : rien n'est perdu) ; dans les apps iOS/Android, copie dans le stockage natif (jamais vidé par le système).
+- ☁️ **Comptes** : Firebase regroupé dans un fichier local (`js/vendor/firebase.js`, plus de CDN Google) et initialisé de façon compatible Safari + app iOS. S'active dès que `js/firebase-config.js` est rempli.
+- 📱 **Barre du bas fixe** : la page ne « rebondit » plus en bas de l'écran (chaque écran défile dans son propre conteneur ; rebond de la WebView désactivé dans l'app iOS).
+- 🏪 Mention « Ajouter à l'écran d'accueil » retirée (l'app se télécharge maintenant depuis l'App Store).
+- 💳 Le quota gratuit du mode infini ne s'applique que si l'achat Premium est réellement disponible sur la plateforme (évite un bouton d'achat inopérant, motif de refus Apple).
+- 🍎 `codemagic.yaml` : icône de l'app générée automatiquement, déclaration « pas de chiffrement spécifique » (plus de question à chaque build), builds éligibles à l'App Store.
+- 🧹 Derniers emojis retirés des titres des leçons de vocabulaire.
+- 🗄️ v8 sauvegardée dans `backups/v8-avant-v9/`
+
 ## Ajout — 16 septembre 2026 · Publication iOS sans Mac
 - 🍎 `codemagic.yaml` : pipeline de compilation iOS dans le cloud (Codemagic, palier gratuit 500 min/mois) — plus besoin de Mac ni de location coûteuse, seul le compte Apple Developer (99 $/an) reste payant
 - 📘 `GUIDE-PUBLICATION.md`, section 5 réécrite avec la marche à suivre précise

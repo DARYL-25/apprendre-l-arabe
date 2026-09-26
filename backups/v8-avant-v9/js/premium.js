@@ -28,17 +28,9 @@ window.Premium = (function(){
     return (d && d.date === today()) ? d.count : 0;
   }
   function freeLeft(){ return Math.max(0, (M().freeInfinitePerDay || 25) - usedToday()); }
-  // Le quota gratuit ne s'applique que si l'achat Premium est réellement possible sur cette plateforme
-  // (clé RevenueCat configurée dans l'app, ou lien Stripe sur le web). Sinon : illimité pour tout le monde,
-  // pour ne jamais bloquer un utilisateur derrière un bouton d'achat qui ne marcherait pas.
-  function limited(){
-    if (isActive()) return false;
-    if (isNative()) return !!(platform() === "ios" ? M().revenueCatIosKey : M().revenueCatAndroidKey);
-    return !!M().webPremiumUrl;
-  }
-  function canPlayInfinite(){ return !limited() || freeLeft() > 0; }
+  function canPlayInfinite(){ return isActive() || freeLeft() > 0; }
   function noteInfiniteQuestion(){
-    if (!limited()) return;
+    if (isActive()) return;
     const d = State.get().infDaily;
     const count = (d && d.date === today()) ? d.count + 1 : 1;
     State.set({ infDaily: { date: today(), count } });
@@ -136,6 +128,6 @@ window.Premium = (function(){
     rcInit();
   }
 
-  return { init, isNative, isActive, activate, limited, canPlayInfinite, freeLeft, usedToday, noteInfiniteQuestion,
+  return { init, isNative, isActive, activate, canPlayInfinite, freeLeft, usedToday, noteInfiniteQuestion,
            buy, restore, openPaywall, closePaywall, renderSupport };
 })();

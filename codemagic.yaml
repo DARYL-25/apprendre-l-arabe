@@ -43,6 +43,16 @@ workflows:
           if [ ! -d ios ]; then npx cap add ios; fi
           npx cap sync ios
 
+      - name: Icône de l'app + écran de démarrage (logo Iqra Academy)
+        script: |
+          cd mobile
+          npx capacitor-assets generate --ios --iconBackgroundColor '#0a2e22' --iconBackgroundColorDark '#0a2e22' --splashBackgroundColor '#0a2e22' --splashBackgroundColorDark '#0a2e22'
+
+      - name: Déclarer « pas de chiffrement spécifique » (Apple ne reposera plus la question à chaque build)
+        script: |
+          PLIST=mobile/ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" "$PLIST" || /usr/libexec/PlistBuddy -c "Set :ITSAppUsesNonExemptEncryption false" "$PLIST"
+
       - name: Installer les dépendances CocoaPods
         script: |
           cd mobile/ios/App
@@ -71,8 +81,8 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        submit_to_testflight: true
+        submit_to_testflight: false   # le build arrive dans TestFlight : les testeurs INTERNES y ont accès sans review Apple
         submit_to_app_store: false   # tu soumets à la review manuellement depuis App Store Connect quand tu es prêt
       email:
         recipients:
-          - daryl.jain@gmail.com   # ⬅️ mets ton e-mail : Codemagic t'écrit si la compilation échoue
+          - daryl.jain@gmail.com   # Codemagic écrit ici si la compilation échoue

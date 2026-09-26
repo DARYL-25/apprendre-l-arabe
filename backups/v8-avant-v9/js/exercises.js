@@ -26,29 +26,12 @@ window.Game = (function(){
     return a;
   }
 
-  // Difficulté courante : nombre de choix + distracteurs « proches » (piégeux) ou « éloignés » (faciles).
-  // Les leçons du parcours utilisent toujours le réglage standard ; le mode infini le modifie.
-  const DIFF_STD = { n:4, mode:"std" };
-  let DIFF = DIFF_STD;
-
-  // Lettres « sœurs » (même squelette ou même famille de sons) : les distracteurs les plus piégeux
-  const SISTERS = [["ب","ت","ث","ن","ي"],["ج","ح","خ"],["د","ذ"],["ر","ز"],["س","ش"],["ص","ض"],["ط","ظ"],
-                   ["ع","غ"],["ف","ق"],["ك","ل"],["ا","ل"],["ه","م"],["س","ص"],["ت","ط"],["د","ض"],["ذ","ز","ظ"],["ك","ق"],["ه","ح"]];
-  function letterPool(l){
-    const others = LETTERS.filter(x => x.ar !== l.ar);
-    if (DIFF.mode !== "close") return shuffle(others);
-    const sis = new Set();
-    SISTERS.forEach(g => { if (g.includes(l.ar)) g.forEach(c => { if (c !== l.ar) sis.add(c); }); });
-    return shuffle(others.filter(x => sis.has(x.ar))).concat(shuffle(others.filter(x => !sis.has(x.ar))));
-  }
-
-  // Construit les options uniques : la bonne + des distracteurs (candidats pris dans l'ordre)
+  // Construit 4 options uniques : la bonne + 3 distracteurs (candidats pris dans l'ordre)
   function mkOptions(correct, candidates){
     const seen = new Set([correct.label]);
     const out = [correct];
-    const n = DIFF.n || 4;
     for (const c of candidates) {
-      if (out.length >= n) break;
+      if (out.length >= 4) break;
       if (!c || !c.label || seen.has(c.label)) continue;
       seen.add(c.label);
       out.push(c);
@@ -95,7 +78,7 @@ window.Game = (function(){
         key: "uv" + (i/4 + 1),
         title: "Vocabulaire du Coran " + (i/4 + 1) + "/8",
         icon: "📚", color: ["#ce82ff","#00cd9c","#ff9600","#ff86d0","#1cb0f6","#58cc02","#ff4b4b","#ffc800"][i/4],
-        lessons: groups.map(g => ({ key:"voc-"+g.key, title:g.title, gen:() => vocabLesson(g) }))
+        lessons: groups.map(g => ({ key:"voc-"+g.key, title:g.icon+" "+g.title, gen:() => vocabLesson(g) }))
       });
     }
     return units;
@@ -263,8 +246,7 @@ window.Game = (function(){
 
   // candidats distracteurs : 2 du même thème d'abord, puis le reste du vocabulaire
   function vocabCands(g, w, map){
-    const nSame = DIFF.mode === "close" ? 9 : DIFF.mode === "far" ? 0 : 2;
-    const same = shuffle(g.words.filter(x => x !== w)).slice(0, nSame);
+    const same = shuffle(g.words.filter(x => x !== w)).slice(0, 2);
     const others = [];
     VOCAB.forEach(gr => gr.words.forEach(x => { if (x !== w && !same.includes(x)) others.push(x); }));
     return same.concat(shuffle(others)).map(map);
@@ -342,8 +324,8 @@ window.Game = (function(){
 
   // -- lettres : 28 lettres × 4 directions = 112 combinaisons
   function letterEx(l, m){
-    const disName = () => letterPool(l).map(d => ({ label:d.name }));
-    const disAr   = () => letterPool(l).map(d => ({ label:d.ar, ar:true }));
+    const disName = () => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label:d.name }));
+    const disAr   = () => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label:d.ar, ar:true }));
     if (m === "ar2name")
       return { type:"qcm", title:"Quelle est cette lettre ?", prompt:l.ar, say:l.arName,
         options: mkOptions({ label:l.name, ok:true }, disName()) };
@@ -356,12 +338,19 @@ window.Game = (function(){
     return { type:"qcm", title:"Écoute : quelle lettre entends-tu ? ", autoSay:true, say:l.arName,
       options: mkOptions({ label:l.name, ok:true }, disName()) };
   }
+  function letterCombos(){
+    const combos = [];
+    LETTERS.forEach(l => ["ar2name","name2ar","audio2ar","audio2name"].forEach(m =>
+      combos.push({ id:l.ar, make:() => letterEx(l, m) })));
+    return combos;
+  }
+
   // -- formes : 28 lettres × 4 positions × 4 directions = 448 combinaisons
   const ALL_POS = ["isolated","initial","medial","final"];
   function posLabel(pos){ return pos === "isolated" ? "sous sa forme isolée" : POS_FR[pos] + " du mot"; }
   function formEx(l, pos, m){
-    const disName  = () => letterPool(l).map(d => ({ label:d.name }));
-    const disForms = p => letterPool(l).map(d => ({ label: formOf(d, p), ar:true }));
+    const disName  = () => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label:d.name }));
+    const disForms = p => shuffle(LETTERS.filter(x => x.ar !== l.ar)).map(d => ({ label: formOf(d, p), ar:true }));
     if (m === "form2name")
       return { type:"qcm", title:"Quelle lettre est écrite ici (" + posLabel(pos) + ") ?", prompt: formOf(l, pos), say:l.arName,
         options: mkOptions({ label:l.name, ok:true }, disName()) };
@@ -377,17 +366,25 @@ window.Game = (function(){
       prompt: formOf(l, from), say:l.arName,
       options: mkOptions({ label: formOf(l, pos), ar:true, ok:true }, disForms(pos)) };
   }
+  function formCombos(){
+    const combos = [];
+    LETTERS.forEach(l => ALL_POS.forEach(pos => ["form2name","name2form","audio2form","cross"].forEach(m =>
+      combos.push({ id:l.ar, make:() => formEx(l, pos, m) }))));
+    return combos;
+  }
+
   // -- syllabes et lecture : syllabes (27 × 3 × 3) + tous les mots des banques × 3 directions
   function syllEx(l, v, m){
     const syll = l.ar + SIGNS[v];
-    const sameLetter = ar => ["a","i","ou"].filter(x => x !== v).map(x => ar ? { label: l.ar + SIGNS[x], ar:true } : { label: phWith(l, x) });
-    const otherLetters = ar => letterPool(l).filter(x => x.ar !== "ا").map(d => ar ? { label: d.ar + SIGNS[v], ar:true } : { label: phWith(d, v) });
-    // facile : distracteurs éloignés (autres lettres) · standard : mélange · piégeux : même lettre, autre voyelle + lettres sœurs
-    const cands = ar => DIFF.mode === "far" ? otherLetters(ar)
-                      : DIFF.mode === "close" ? sameLetter(ar).concat(otherLetters(ar))
-                      : (ar ? shuffle(otherLetters(ar).concat(sameLetter(ar))) : sameLetter(ar).concat(otherLetters(ar)));
-    const phCands = () => cands(false);
-    const arCands = () => cands(true);
+    const phCands = () => {
+      const c = [];
+      ["a","i","ou"].forEach(x => { if (x !== v) c.push({ label: phWith(l, x) }); });
+      shuffle(LETTERS.filter(x => x.ar !== l.ar && x.ar !== "ا")).forEach(d => c.push({ label: phWith(d, v) }));
+      return c;
+    };
+    const arCands = () => shuffle(
+      LETTERS.filter(x => x.ar !== l.ar && x.ar !== "ا").map(d => ({ label: d.ar + SIGNS[v], ar:true }))
+        .concat(["a","i","ou"].filter(x => x !== v).map(x => ({ label: l.ar + SIGNS[x], ar:true }))));
     if (m === "ar2ph")
       return { type:"qcm", title:"Comment se lit cette syllabe ?", prompt:syll, say:syll,
         options: mkOptions({ label: phWith(l, v), ok:true }, phCands()) };
@@ -398,7 +395,7 @@ window.Game = (function(){
       options: mkOptions({ label:syll, ar:true, ok:true }, arCands()) };
   }
   function bankEx(w, bank, m){
-    const othersPh = () => (DIFF.mode === "far" ? [] : (w.d || []).map(d => ({ label:d }))).concat(shuffle(bank.filter(x => x !== w)).map(d => ({ label:d.ph })));
+    const othersPh = () => (w.d || []).map(d => ({ label:d })).concat(shuffle(bank.filter(x => x !== w)).map(d => ({ label:d.ph })));
     const othersAr = () => shuffle(bank.filter(x => x !== w)).map(d => ({ label:d.ar, ar:true }));
     if (m === "ar2ph")
       return { type:"qcm", title:"Comment se lit ce mot ?", prompt:w.ar, say:w.ar,
@@ -409,79 +406,32 @@ window.Game = (function(){
     return { type:"qcm", title:"Écoute et choisis le mot ", autoSay:true, say:w.ar,
       options: mkOptions({ label:w.ar, ar:true, ok:true }, othersAr()) };
   }
-  // ============================================================
-  // MODE INFINI PARAMÉTRABLE — contenu, lettres, voyelles, positions,
-  // thèmes, types de questions, niveau, vies et chrono au choix.
-  // ============================================================
-  const INF_LEVELS = {
-    facile:    { n:3, mode:"far",   label:"Facile",    desc:"3 choix, faciles à distinguer" },
-    moyen:     { n:4, mode:"std",   label:"Moyen",     desc:"4 choix" },
-    difficile: { n:4, mode:"close", label:"Difficile", desc:"4 choix piégeux (lettres sœurs)" },
-    expert:    { n:6, mode:"close", label:"Expert",    desc:"6 choix piégeux + construire les mots", build:true }
-  };
-  // quelles « directions » de question correspondent à chaque type choisi
-  const INF_QMODES = {
-    letters: { read:["ar2name"],   write:["name2ar"],           listen:["audio2ar","audio2name"], meaning:[] },
-    forms:   { read:["form2name"], write:["name2form","cross"], listen:["audio2form"],            meaning:[] },
-    syll:    { read:["ar2ph"],     write:["ph2ar"],             listen:["audio2ar"],              meaning:[] },
-    reading: { read:["ar2ph"],     write:["ph2ar"],             listen:["audio2ar"],              meaning:[] },
-    words:   { read:["ar2ph"],     write:["ph2ar"],             listen:["audio2ar"],              meaning:["ar2tr","tr2ar","audio2tr"] }
-  };
-  const INF_BANKS = {
-    sukun:  { label:"Soukoun",          words: () => [SUKUN_BANK] },
-    shadda: { label:"Shadda",           words: () => [SHADDA_BANK] },
-    tanwin: { label:"Tanwin",           words: () => [TANWIN_BANK] },
-    long:   { label:"Voyelles longues", words: () => [LONG_BANK] },
-    course: { label:"Cours de lecture", words: () => PDF_COURSE.map(b => b.words) }
-  };
-  const INF_DEFAULT = {
-    content:["letters"], letters: LETTERS.map((_, i) => i), vowels:["a","i","ou"],
-    positions:["isolated","initial","medial","final"], banks:["sukun","shadda","tanwin","long","course"],
-    themes: VOCAB.map(g => g.key), qtypes:["read","write","listen","meaning"],
-    level:"moyen", lives:"0", timer:"0"
-  };
-  // préréglages rapides (ne changent que le contenu)
-  const INF_PRESETS = {
-    letters:  { title:"Lettres",            content:["letters"] },
-    forms:    { title:"Formes des lettres", content:["forms"] },
-    reading:  { title:"Syllabes et lecture", content:["syll","reading"] },
-    words:    { title:"Mots du Coran",      content:["words"] },
-    ultimate: { title:"ULTIME — tout mélangé", content:["letters","forms","syll","reading","words"] }
-  };
-  function infConfig(){
-    const saved = State.get().infCfg || {};
-    const c = Object.assign({}, INF_DEFAULT, saved);
-    // sécurité si une ancienne sauvegarde est incomplète
-    Object.keys(INF_DEFAULT).forEach(k => { if (Array.isArray(INF_DEFAULT[k]) && !Array.isArray(c[k])) c[k] = INF_DEFAULT[k].slice(); });
-    if (!INF_LEVELS[c.level]) c.level = "moyen";
-    return c;
-  }
-  // construit toutes les combinaisons (élément × direction) demandées par les réglages
-  function infCombos(c){
-    const lv = INF_LEVELS[c.level] || INF_LEVELS.moyen;
-    const modes = k => [...new Set(c.qtypes.reduce((a, q) => a.concat(INF_QMODES[k][q] || []), []))];
-    const has = k => c.content.includes(k);
-    const L = c.letters.map(i => LETTERS[i]).filter(Boolean);
+  function readingCombos(){
     const combos = [];
-    if (has("letters")) { const ms = modes("letters");
-      L.forEach(l => ms.forEach(m => combos.push({ id:l.ar, make:() => letterEx(l, m) }))); }
-    if (has("forms")) { const ms = modes("forms");
-      L.forEach(l => c.positions.forEach(pos => ms.forEach(m => combos.push({ id:l.ar, make:() => formEx(l, pos, m) })))); }
-    if (has("syll")) { const ms = modes("syll");
-      L.filter(l => l.ar !== "ا").forEach(l => c.vowels.forEach(v => ms.forEach(m =>
-        combos.push({ id:l.ar + v, make:() => syllEx(l, v, m) })))); }
-    if (has("reading")) { const ms = modes("reading");
-      c.banks.forEach(k => (INF_BANKS[k] ? INF_BANKS[k].words() : []).forEach(bank => bank.forEach(w => ms.forEach(m =>
-        combos.push({ id:w.ar, make:() => bankEx(w, bank, m) }))))); }
-    if (has("words")) { const ms = modes("words");
-      VOCAB.filter(g => c.themes.includes(g.key)).forEach(g => g.words.forEach(w => {
-        ms.forEach(m => combos.push({ id:w.ar, make:() => wordEx(g, w, m) }));
-        if (lv.build && c.qtypes.includes("write"))
-          combos.push({ id:w.ar, make:() => ({ type:"build", target: strip(w.ar), ph:w.ph, meaning: State.trWord(w), say:w.ar }) });
-      })); }
+    LETTERS.filter(l => l.ar !== "ا").forEach(l => ["a","i","ou"].forEach(v => ["ar2ph","ph2ar","audio2ar"].forEach(m =>
+      combos.push({ id:l.ar + v, make:() => syllEx(l, v, m) }))));
+    const banks = PDF_COURSE.map(b => b.words).concat([SUKUN_BANK, SHADDA_BANK, TANWIN_BANK, LONG_BANK]);
+    banks.forEach(bank => bank.forEach(w => ["ar2ph","ph2ar","audio2ar"].forEach(m =>
+      combos.push({ id:w.ar, make:() => bankEx(w, bank, m) }))));
     return combos;
   }
-  function infCount(c){ return infCombos(c).length; }
+
+  // -- mots : 320 mots × 6 directions = 1920 combinaisons
+  function wordCombos(){
+    const combos = [];
+    VOCAB.forEach(g => g.words.forEach(w => ["ar2tr","tr2ar","ar2ph","ph2ar","audio2tr","audio2ar"].forEach(m =>
+      combos.push({ id:w.ar, make:() => wordEx(g, w, m) }))));
+    return combos;
+  }
+
+  const INFINITE_DECKS = {
+    letters:  { title:"Lettres à l'infini",            build: letterCombos },
+    forms:    { title:"Formes à l'infini",             build: formCombos },
+    reading:  { title:"Syllabes et lecture à l'infini", build: readingCombos },
+    words:    { title:"Mots du Coran à l'infini",      build: wordCombos },
+    ultimate: { title:"Mode ULTIME — tout mélangé",
+                build: () => letterCombos().concat(formCombos(), readingCombos(), wordCombos()) }
+  };
 
   // ---------- runner : déroulement d'une leçon ----------
   const UNITS = buildUnits();
@@ -494,64 +444,26 @@ window.Game = (function(){
   function start(lessonKey){
     const lesson = FLAT.find(l => l.key === lessonKey);
     if (!lesson) return;
-    DIFF = DIFF_STD; stopTimer();
     cur = { lesson, exercises: lesson.gen().filter(Boolean), idx:0, hearts:3, mistakes:0, selected:-1, answered:false };
     App.show("screen-lesson");
     renderExercise();
   }
 
-  // preset (facultatif) : "letters" | "forms" | "reading" | "words" | "ultimate" → ne remplace que le contenu
-  function startInfinite(preset){
-    const c = infConfig();
-    if (preset && INF_PRESETS[preset]) c.content = INF_PRESETS[preset].content.slice();
+  function startInfinite(kind){
+    const def = INFINITE_DECKS[kind];
+    if (!def) return;
     if (!Premium.canPlayInfinite()) { Premium.openPaywall("Tu as utilisé tes " + (window.MONETIZATION||{}).freeInfinitePerDay + " questions gratuites d'aujourd'hui."); return; }
-    const lv = INF_LEVELS[c.level] || INF_LEVELS.moyen;
-    DIFF = { n: lv.n, mode: lv.mode };
-    const base = infCombos(c);
-    if (!base.length) { DIFF = DIFF_STD; alert("Aucune question possible avec ces réglages. Ajoute du contenu ou des types de questions."); return; }
-    const lives = +c.lives || 0;
-    cur = { infinite:true, cfg:c, title: preset && INF_PRESETS[preset] ? INF_PRESETS[preset].title : infSummary(c), base,
-            deck: smartShuffle(base.slice()), idx:0, correct:0, wrong:0, combo:0, best:0, cycle:0,
-            maxLives: lives, hearts: lives, timer: +c.timer || 0, selected:-1, answered:false };
+    const base = def.build();
+    cur = { infinite:true, kind, title:def.title, base, deck: smartShuffle(base.slice()),
+            idx:0, correct:0, wrong:0, combo:0, best:0, cycle:0, selected:-1, answered:false };
     App.show("screen-lesson");
     renderExercise();
-  }
-
-  // résumé lisible des réglages (carte d'accueil, bilan)
-  function infSummary(c){
-    const names = { letters:"Lettres", forms:"Formes", syll:"Syllabes", reading:"Lecture", words:"Mots du Coran" };
-    const what = c.content.map(k => names[k]).join(", ") || "—";
-    const lv = (INF_LEVELS[c.level] || INF_LEVELS.moyen).label;
-    const lives = +c.lives ? c.lives + " vies" : "vies illimitées";
-    const timer = +c.timer ? " · " + c.timer + " s par question" : "";
-    return what + " · " + lv + " · " + lives + timer;
-  }
-
-  // ---------- chrono par question ----------
-  let timerId = null;
-  function stopTimer(){ if (timerId) { clearInterval(timerId); timerId = null; } }
-  function startTimer(){
-    stopTimer();
-    if (!cur || !cur.infinite || !cur.timer) return;
-    cur.tLeft = cur.timer;
-    renderHeader();
-    timerId = setInterval(() => {
-      if (!cur || cur.answered || cur.done) { stopTimer(); return; }
-      cur.tLeft--;
-      renderHeader();
-      if (cur.tLeft <= 0) { stopTimer(); resolve(false, true); }
-    }, 1000);
   }
 
   function renderHeader(){
     if (cur.infinite) {
       el("lesson-progress-fill").style.width = Math.round(100 * cur.idx / cur.deck.length) + "%";
-      let h = "";
-      if (cur.timer) h += '<span class="inf-timer' + (cur.tLeft != null && cur.tLeft <= 3 ? ' low' : '') + '">' + Icon("timer") + Math.max(0, cur.tLeft == null ? cur.timer : cur.tLeft) + '</span>';
-      if (cur.maxLives) h += Icon("heart","heart on").repeat(Math.max(0, cur.hearts)) + Icon("hearto","heart").repeat(Math.max(0, cur.maxLives - cur.hearts));
-      else h += Icon("check") + cur.correct;
-      h += " " + Icon("flame") + cur.combo;
-      el("lesson-hearts").innerHTML = h;
+      el("lesson-hearts").innerHTML = Icon("check") + cur.correct + " " + Icon("flame") + cur.combo;
       return;
     }
     el("lesson-progress-fill").style.width = Math.round(100 * cur.idx / cur.exercises.length) + "%";
@@ -569,7 +481,7 @@ window.Game = (function(){
     cur.selected = -1; cur.answered = false;
     renderHeader();
     const body = el("lesson-body");
-    if (ex.type === "build") { renderBuild(ex, body); startTimer(); return; }
+    if (ex.type === "build") { renderBuild(ex, body); return; }
     let html = '<h2 class="ex-title">' + ex.title + '</h2>';
     if (ex.prompt) html += '<div class="ex-prompt ar"' + (ex.say ? ' data-say="1"' : '') + '>' + ex.prompt + (ex.say ? ' <span class="spk">' + Icon("volume") + '</span>' : '') + '</div>';
     else if (ex.say) html += '<button class="ex-bigplay" id="ex-play">' + Icon("volume") + '</button>';
@@ -590,7 +502,6 @@ window.Game = (function(){
     });
     setFooter("disabled");
     if (ex.autoSay && ex.say) setTimeout(() => Audio_.say(ex.say), 350);
-    startTimer();
   }
 
   // exercice « construis le mot »
@@ -627,7 +538,7 @@ window.Game = (function(){
   }
 
   // pied de page : bouton VÉRIFIER / CONTINUER + bandeau feedback
-  function setFooter(mode, ok, correctLabel, timeout){
+  function setFooter(mode, ok, correctLabel){
     const f = el("lesson-footer");
     const btn = el("btn-check");
     f.classList.remove("ok", "ko");
@@ -638,57 +549,47 @@ window.Game = (function(){
       f.classList.add(ok ? "ok" : "ko");
       el("lesson-feedback").innerHTML = ok
         ? '<b>' + Icon("check") + 'Excellent !</b>'
-        : '<b>' + Icon(timeout ? "timer" : "x") + (timeout ? 'Temps écoulé !' : 'Pas tout à fait…') + '</b> La bonne réponse : <span class="fb-ans">' + correctLabel + '</span>';
+        : '<b>' + Icon("x") + 'Pas tout à fait…</b> La bonne réponse : <span class="fb-ans">' + correctLabel + '</span>';
     }
-  }
-
-  function correctLabelOf(ex){
-    if (ex.type === "build") return '<span class="ar">' + ex.target + '</span>';
-    const good = ex.options.find(o => o.ok);
-    return (good.ar ? '<span class="ar">' : '<span>') + good.label + '</span>';
-  }
-
-  // enregistre la réponse (bonne, mauvaise, ou temps écoulé)
-  function resolve(ok, timeout){
-    if (!cur || cur.answered) return;
-    stopTimer();
-    const ex = currentEx();
-    if (ex.type !== "build") {
-      el("lesson-body").querySelectorAll(".ex-opt").forEach((b, i) => {
-        if (ex.options[i].ok) b.classList.add("good");
-        else if (i === cur.selected) b.classList.add("bad");
-        b.classList.add("locked");
-      });
-    }
-    cur.answered = true;
-    if (cur.infinite) {
-      Premium.noteInfiniteQuestion();
-      if (ok) { cur.correct++; cur.combo++; cur.best = Math.max(cur.best, cur.combo); }
-      else {   // la combinaison ratée revient un peu plus tard
-        cur.wrong++; cur.combo = 0;
-        if (cur.maxLives) cur.hearts--;
-        const pos = Math.min(cur.idx + 4, cur.deck.length);
-        cur.deck.splice(pos, 0, cur.deck[cur.idx]);
-      }
-      renderHeader();
-    } else if (!ok) { cur.mistakes++; cur.hearts--; renderHeader(); }
-    if (ok && ex.say) Audio_.say(ex.say);
-    setFooter("next", ok, correctLabelOf(ex), timeout);
-    if (!cur.infinite && cur.hearts <= 0) { setTimeout(showFail, 900); return; }
   }
 
   function check(){
     const ex = currentEx();
     if (!cur.answered) {
-      let ok;
-      if (ex.type === "build") ok = cur.buildCheck();
-      else { if (cur.selected < 0) return; ok = !!ex.options[cur.selected].ok; }
-      resolve(ok, false);
+      let ok, correctLabel;
+      if (ex.type === "build") {
+        ok = cur.buildCheck();
+        correctLabel = '<span class="ar">' + ex.target + '</span>';
+      } else {
+        if (cur.selected < 0) return;
+        ok = !!ex.options[cur.selected].ok;
+        const good = ex.options.find(o => o.ok);
+        correctLabel = (good.ar ? '<span class="ar">' : '<span>') + good.label + '</span>';
+        const body = el("lesson-body");
+        body.querySelectorAll(".ex-opt").forEach((b, i) => {
+          if (ex.options[i].ok) b.classList.add("good");
+          else if (i === cur.selected) b.classList.add("bad");
+          b.classList.add("locked");
+        });
+      }
+      cur.answered = true;
+      if (cur.infinite) {
+        Premium.noteInfiniteQuestion();
+        if (ok) { cur.correct++; cur.combo++; cur.best = Math.max(cur.best, cur.combo); }
+        else {   // pas de cœurs perdus : la combinaison ratée revient un peu plus tard
+          cur.wrong++; cur.combo = 0;
+          const pos = Math.min(cur.idx + 4, cur.deck.length);
+          cur.deck.splice(pos, 0, cur.deck[cur.idx]);
+        }
+        renderHeader();
+      } else if (!ok) { cur.mistakes++; cur.hearts--; renderHeader(); }
+      if (ok && ex.say) Audio_.say(ex.say);
+      setFooter("next", ok, correctLabel);
+      if (!cur.infinite && cur.hearts <= 0) { setTimeout(showFail, 900); return; }
     } else {
       cur.idx++;
       cur.ex = null;
       if (cur.infinite) {
-        if (cur.maxLives && cur.hearts <= 0) { showInfiniteEnd(false, true); return; }   // plus de vies
         if (!Premium.canPlayInfinite()) { showInfiniteEnd(true); return; }   // quota gratuit du jour atteint
         if (cur.idx >= cur.deck.length) {   // paquet épuisé : on remélange tout
           cur.deck = smartShuffle(cur.base.slice());
@@ -742,20 +643,16 @@ window.Game = (function(){
   }
 
   // bilan de fin d'entraînement infini (déclenché par ✕)
-  function showInfiniteEnd(limitReached, noLives){
-    stopTimer();
+  function showInfiniteEnd(limitReached){
     const total = cur.correct + cur.wrong;
     const xp = cur.correct;   // 1 XP par bonne réponse
     if (xp > 0) State.addXp(xp);
-    const record = cur.best > (State.get().infBest || 0);
-    if (record) State.set({ infBest: cur.best });
     const pct = total ? Math.round(100 * cur.correct / total) : 0;
     el("lesson-body").innerHTML =
       '<div class="lesson-end">' +
       '<div class="end-emoji">' + Icon("infinity") + '</div>' +
-      '<h2>' + (noLives ? 'Plus de vies !' : 'Bel entraînement !') + '</h2>' +
+      '<h2>Bel entraînement !</h2>' +
       '<p>' + cur.title + '</p>' +
-      (record ? '<p class="inf-record">' + Icon("trophy") + 'Nouveau record : ' + cur.best + (cur.best > 1 ? ' bonnes réponses' : ' bonne réponse') + ' d\'affilée</p>' : '') +
       '<div class="inf-stats">' +
       '<div class="stat"><b>' + total + '</b><span>questions</span></div>' +
       '<div class="stat"><b>' + pct + '%</b><span>de réussite</span></div>' +
@@ -774,7 +671,6 @@ window.Game = (function(){
   }
 
   function quit(){
-    stopTimer();
     if (cur && cur.infinite && !cur.done) {
       if (cur.correct + cur.wrong > 0) { showInfiniteEnd(); return; }
     }
@@ -788,6 +684,5 @@ window.Game = (function(){
     el("btn-quit-lesson").onclick = quit;
   }
 
-  return { UNITS, FLAT, start, startInfinite, init,
-           INF_LEVELS, INF_BANKS, INF_PRESETS, INF_DEFAULT, infConfig, infCount, infSummary };
+  return { UNITS, FLAT, start, startInfinite, INFINITE_DECKS, init };
 })();
