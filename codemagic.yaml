@@ -65,8 +65,9 @@ workflows:
       - name: Augmenter automatiquement le numéro de build
         script: |
           cd mobile/ios/App
-          LATEST=$(app-store-connect get-latest-app-store-build-number "$BUNDLE_ID" || echo 0)
-          agvtool new-version -all $(($LATEST + 1))
+          # BUILD_NUMBER = numéro du build Codemagic (augmente tout seul à chaque build,
+          # toujours supérieur au dernier envoyé sur App Store Connect)
+          agvtool new-version -all $BUILD_NUMBER
 
       - name: Compiler l'app (.ipa)
         script: |
