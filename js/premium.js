@@ -1,4 +1,4 @@
-// ============================================================
+é// ============================================================
 // Iqra Academy — Premium & soutien
 // ------------------------------------------------------------
 // Tout le parcours, la théorie et le Coran restent GRATUITS.
@@ -56,6 +56,13 @@ window.Premium = (function(){
     try {
       await rc().configure({ apiKey: key, appUserID: (window.Cloud && Cloud.currentUser() && Cloud.currentUser().uid) || undefined });
       rcReady = true;
+      // Prix réel de l'App Store / Play Store, dans la devise du pays de l'utilisateur
+      try {
+        const off = await rc().getOfferings();
+        const pkg = off && off.current && off.current.availablePackages && off.current.availablePackages[0];
+        const price = pkg && pkg.product && pkg.product.priceString;
+        if (price) { window.MONETIZATION = Object.assign({}, M(), { priceLabel: price }); }
+      } catch(_){}
       const info = await rc().getCustomerInfo();
       applyCustomerInfo(info && info.customerInfo ? info.customerInfo : info);
     } catch(e){ console.warn("RevenueCat :", e); }
