@@ -702,6 +702,33 @@ window.Game = (function(){
     }
   }
 
+  // Illustration de fin de leçon : coupe dorée + étincelles (remplace l'ancienne icône « confettis »)
+  const TROPHY_SVG =
+    '<svg viewBox="0 0 120 120" width="120" height="120" style="display:block;margin:0 auto;filter:drop-shadow(0 6px 14px rgba(245,184,46,.35))" aria-hidden="true">' +
+      '<defs>' +
+        '<linearGradient id="trGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".55" stop-color="#f5b82e"/><stop offset="1" stop-color="#d98c0b"/></linearGradient>' +
+        '<linearGradient id="trShine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
+      '</defs>' +
+      '<circle cx="60" cy="58" r="46" fill="#f5b82e" opacity=".12"/>' +
+      // anses
+      '<path d="M38 34H26a10 10 0 0 0 0 20c4 0 8-1.5 12-4" fill="none" stroke="#d98c0b" stroke-width="6" stroke-linecap="round"/>' +
+      '<path d="M82 34h12a10 10 0 0 1 0 20c-4 0-8-1.5-12-4" fill="none" stroke="#d98c0b" stroke-width="6" stroke-linecap="round"/>' +
+      // coupe
+      '<path d="M36 26h48v22a24 24 0 0 1-48 0z" fill="url(#trGold)"/>' +
+      '<path d="M43 30h7v18a17 17 0 0 0 6 13 22 22 0 0 1-13-13z" fill="url(#trShine)"/>' +
+      // pied + socle
+      '<path d="M54 71h12v12H54z" fill="#d98c0b"/>' +
+      '<rect x="42" y="83" width="36" height="9" rx="3" fill="url(#trGold)"/>' +
+      '<rect x="36" y="92" width="48" height="8" rx="3" fill="#b8740a"/>' +
+      // étoile sur la coupe
+      '<path d="M60 36l3.5 7.2 7.9 1.1-5.7 5.6 1.4 7.8L60 54l-7.1 3.7 1.4-7.8-5.7-5.6 7.9-1.1z" fill="#fff8e1"/>' +
+      // étincelles
+      '<path d="M18 18l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffe08a"/>' +
+      '<path d="M100 14l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z" fill="#ffe08a"/>' +
+      '<path d="M104 72l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#3ddc97"/>' +
+      '<path d="M14 70l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#3ddc97"/>' +
+    '</svg>';
+
   function showEnd(){
     const stars = cur.mistakes === 0 ? 3 : cur.mistakes <= 2 ? 2 : 1;
     const xp = 10 + stars * 5;
@@ -709,7 +736,7 @@ window.Game = (function(){
     const body = el("lesson-body");
     body.innerHTML =
       '<div class="lesson-end">' +
-      '<div class="end-emoji">' + Icon("party") + '</div>' +
+      '<div class="end-emoji end-trophy">' + TROPHY_SVG + '</div>' +
       '<h2>Leçon terminée !</h2>' +
       '<div class="end-stars">' + Icon.stars(stars) + '</div>' +
       '<div class="end-xp">+' + xp + ' XP</div>' +
