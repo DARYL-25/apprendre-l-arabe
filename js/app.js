@@ -232,8 +232,8 @@ window.App = (function(){
     if (pb) pb.style.display = (Premium.isActive() || Premium.limited()) ? "" : "none";
     if (pb) {
       pb.innerHTML = Premium.isActive()
-        ? '<h3>' + Icon("crown") + 'Premium</h3><p class="acct-note">Merci pour ton soutien ! Entraînement infini illimité.</p>'
-        : '<h3>' + Icon("crown") + 'Premium</h3><p class="acct-note">Entraînement infini illimité, achat unique ' + (window.MONETIZATION||{}).priceLabel + ', sans abonnement ni publicité. Toutes les leçons, la théorie et le Coran restent gratuits.</p>' +
+        ? '<h3>' + Icon("crown") + 'Iqra Premium</h3><p class="acct-note">Merci pour ton soutien ! Entraînement infini illimité.</p>'
+        : '<h3>' + Icon("crown") + 'Iqra Premium</h3><p class="acct-note">Entraînement infini illimité, achat unique ' + (window.MONETIZATION||{}).priceLabel + ', sans abonnement ni publicité. Toutes les leçons, la théorie et le Coran restent gratuits.</p>' +
           '<div class="acct-btns"><button class="btn small" id="btn-premium">Passer en illimité</button>' +
           (Premium.isNative() ? '<button class="btn-link" id="btn-restore">Restaurer mes achats</button>' : '') + '</div>';
       const b = el("btn-premium"); if (b) b.onclick = () => Premium.openPaywall("");
