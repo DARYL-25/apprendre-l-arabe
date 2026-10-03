@@ -24,10 +24,10 @@ window.MONETIZATION = {
   // Lien de paiement Stripe pour Premium sur le WEB (achat unique 4,99 €). Vide = bouton masqué sur le web.
   webPremiumUrl: "",
   // RevenueCat (achats intégrés iOS/Android). Clés publiques, une par plateforme.
-  revenueCatIosKey: "",
+  revenueCatIosKey: "appl_pcKVjBCbqDvqqWPRxcVdLdEvrZG",
   revenueCatAndroidKey: "",
   // Identifiant de l'"entitlement" créé dans RevenueCat
-  entitlement: "premium",
+  entitlement: "iqra_academy_pro",
   // Nombre de questions gratuites par jour en mode infini
   freeInfinitePerDay: 25,
   priceLabel: "4,99 €"
